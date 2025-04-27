@@ -39,6 +39,7 @@ import theme, { colors } from "./styles/theme";
 import LandingPage from "./components/landing/LandingPage";
 import ConfirmationPage from "./components/confirmation/ConfirmationPage";
 import AdminPage from "./components/admin/AdminPage";
+import CustomCursor from "./components/ui/CustomCursor";
 
 // Wrapper component to access location
 const AppContent = () => {
@@ -613,6 +614,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
+        <CustomCursor />
         <AppContent />
       </Router>
     </ThemeProvider>
