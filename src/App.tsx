@@ -1,25 +1,621 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
+import {
+  ThemeProvider,
+  CssBaseline,
+  Box,
+  AppBar,
+  Toolbar,
+  Typography,
+  Container,
+  Button,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Divider,
+  useMediaQuery,
+  useTheme,
+  Fade,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import HomeIcon from "@mui/icons-material/Home";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import LocalCafeIcon from "@mui/icons-material/LocalCafe";
+import EmailIcon from "@mui/icons-material/Email";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import theme, { colors } from "./styles/theme";
+import LandingPage from "./components/landing/LandingPage";
+import ConfirmationPage from "./components/confirmation/ConfirmationPage";
+import AdminPage from "./components/admin/AdminPage";
+
+// Wrapper component to access location
+const AppContent = () => {
+  const location = useLocation();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Handle scroll effect for AppBar
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Handle drawer toggle
+  const handleDrawerToggle = () => {
+    setMobileOpen((prevState) => !prevState);
+  };
+
+  // Close drawer when navigating
+  const handleNavigation = () => {
+    if (mobileOpen) setMobileOpen(false);
+  };
+
+  // Menu items
+  const menuItems = [
+    { label: "Home", path: "/", icon: <HomeIcon /> },
+    { label: "Admin", path: "/admin", icon: <AdminPanelSettingsIcon /> },
+  ];
+
+  return (
+    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      {/* Header with navigation - Updated to match scroll behavior requirements */}
+      <AppBar
+        position="sticky"
+        sx={{
+          backgroundColor: scrolled
+            ? "rgba(255, 255, 255, 0.95)" // White with transparency when scrolled
+            : colors.normal, // Violet theme color when not scrolled
+          boxShadow: scrolled ? "0 4px 20px rgba(13, 12, 35, 0.1)" : "none",
+          transition: "all 0.3s ease",
+        }}
+        elevation={0}
+      >
+        <Container maxWidth="lg">
+          <Toolbar
+            sx={{
+              px: { xs: 1, sm: 2 },
+              py: 1.5,
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            {/* Logo area */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  background: scrolled
+                    ? "transparent"
+                    : "rgba(255, 255, 255, 0.15)",
+                  px: 2,
+                  py: 0.8,
+                  borderRadius: 1.5,
+                  mr: 2,
+                  transition: "all 0.3s ease",
+                }}
+              >
+                <LocalCafeIcon
+                  sx={{
+                    color: scrolled ? colors.normal : "white",
+                    fontSize: "1.8rem",
+                    mr: 1,
+                    transition: "color 0.3s ease",
+                  }}
+                />
+                <Typography
+                  variant="h6"
+                  component="div"
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: "1.3rem",
+                    color: scrolled ? colors.normal : "white",
+                    transition: "color 0.3s ease",
+                  }}
+                >
+                  Tea Gathering
+                </Typography>
+              </Box>
+            </Box>
+
+            {/* Desktop navigation */}
+            {!isMobile && (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                {menuItems.map((item) => (
+                  <Button
+                    key={item.label}
+                    href={item.path}
+                    sx={{
+                      mx: 0.5,
+                      px: 2,
+                      py: 1,
+                      color: scrolled ? colors.normal : "white",
+                      fontWeight: 500,
+                      borderRadius: 1,
+                      textTransform: "none",
+                      fontSize: "1rem",
+                      letterSpacing: 0.5,
+                      transition: "all 0.2s ease",
+                      backgroundColor: scrolled
+                        ? location.pathname === item.path
+                          ? `${colors.light}40`
+                          : "transparent"
+                        : location.pathname === item.path
+                        ? "rgba(255, 255, 255, 0.15)"
+                        : "transparent",
+                      "&:hover": {
+                        backgroundColor: scrolled
+                          ? `${colors.light}60`
+                          : "rgba(255, 255, 255, 0.25)",
+                      },
+                    }}
+                    startIcon={item.icon}
+                  >
+                    {item.label}
+                  </Button>
+                ))}
+
+                {/* Call to action button */}
+                <Button
+                  variant="contained"
+                  href="/"
+                  sx={{
+                    ml: 2,
+                    px: 2.5,
+                    py: 1,
+                    backgroundColor: scrolled ? colors.normal : "white",
+                    color: scrolled ? "white" : colors.normal,
+                    fontWeight: 600,
+                    borderRadius: 1,
+                    textTransform: "none",
+                    fontSize: "0.95rem",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+                    "&:hover": {
+                      backgroundColor: scrolled
+                        ? colors.normalHover
+                        : colors.light,
+                    },
+                    transition: "all 0.3s ease",
+                  }}
+                >
+                  Register Now
+                </Button>
+              </Box>
+            )}
+
+            {/* Mobile menu button */}
+            {isMobile && (
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Button
+                  variant="contained"
+                  href="/"
+                  size="small"
+                  sx={{
+                    mr: 1.5,
+                    backgroundColor: scrolled ? colors.normal : "white",
+                    color: scrolled ? "white" : colors.normal,
+                    fontWeight: 600,
+                    borderRadius: 1,
+                    textTransform: "none",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      backgroundColor: scrolled
+                        ? colors.normalHover
+                        : colors.light,
+                    },
+                  }}
+                >
+                  Register
+                </Button>
+
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  edge="end"
+                  onClick={handleDrawerToggle}
+                  sx={{
+                    color: scrolled ? colors.normal : "white",
+                    backgroundColor: scrolled
+                      ? `${colors.light}30`
+                      : "rgba(255, 255, 255, 0.1)",
+                    "&:hover": {
+                      backgroundColor: scrolled
+                        ? `${colors.light}50`
+                        : "rgba(255, 255, 255, 0.2)",
+                    },
+                    borderRadius: 1,
+                    p: 1,
+                    transition: "all 0.3s ease",
+                  }}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Box>
+            )}
+          </Toolbar>
+        </Container>
+      </AppBar>
+
+      {/* Mobile navigation drawer - Updated design */}
+      <Box component="nav">
+        <Drawer
+          variant="temporary"
+          anchor="right" // Changed to slide from right
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true,
+          }}
+          sx={{
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: 250,
+              backgroundColor: colors.normal,
+              color: "white",
+              borderRadius: "16px 0 0 16px",
+            },
+          }}
+        >
+          {/* Updated mobile drawer content */}
+          <Box
+            onClick={handleDrawerToggle}
+            sx={{ textAlign: "center", height: "100%" }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                p: 3,
+                backgroundColor: "white",
+              }}
+            >
+              <LocalCafeIcon
+                sx={{ mr: 1.5, color: colors.normal, fontSize: 28 }}
+              />
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: 700,
+                  fontSize: "1.3rem",
+                  color: colors.normal,
+                }}
+              >
+                Tea Gathering
+              </Typography>
+            </Box>
+
+            <List sx={{ p: 2 }}>
+              {menuItems.map((item) => (
+                <ListItem key={item.label} disablePadding sx={{ mb: 1 }}>
+                  <ListItemButton
+                    component="a"
+                    href={item.path}
+                    onClick={handleNavigation}
+                    sx={{
+                      py: 1.5,
+                      borderRadius: 1,
+                      backgroundColor:
+                        location.pathname === item.path
+                          ? "rgba(255, 255, 255, 0.15)"
+                          : "transparent",
+                      "&:hover": {
+                        backgroundColor: "rgba(255, 255, 255, 0.1)",
+                      },
+                    }}
+                  >
+                    <Box sx={{ mr: 2 }}>{item.icon}</Box>
+                    <ListItemText
+                      primary={item.label}
+                      primaryTypographyProps={{
+                        fontWeight: location.pathname === item.path ? 700 : 500,
+                      }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+
+            <Box
+              sx={{
+                mt: "auto",
+                p: 3,
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Button
+                variant="contained"
+                fullWidth
+                href="/"
+                sx={{
+                  py: 1.5,
+                  backgroundColor: "white",
+                  color: colors.normal,
+                  fontWeight: 600,
+                  borderRadius: 1,
+                  textTransform: "none",
+                  fontSize: "1rem",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+                  "&:hover": {
+                    backgroundColor: colors.light,
+                  },
+                }}
+              >
+                Register Now
+              </Button>
+            </Box>
+          </Box>
+        </Drawer>
+      </Box>
+
+      {/* Main content area */}
+      <Box component="main" sx={{ flexGrow: 1 }}>
+        <Fade in={true} timeout={800}>
+          <Box>
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/confirmation/:id" element={<ConfirmationPage />} />
+              <Route path="/admin" element={<AdminPage />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Box>
+        </Fade>
+      </Box>
+
+      {/* Enhanced Footer */}
+      <Box
+        component="footer"
+        sx={{
+          py: 6, // Increased vertical padding
+          mt: "auto",
+          backgroundColor: "#f8f8fc", // Slightly colored background that works with violet theme
+          borderTop: "1px solid",
+          borderColor: `${colors.light}`,
+          boxShadow: "0 -4px 20px rgba(13, 12, 35, 0.05)", // Subtle shadow for depth
+        }}
+      >
+        <Container maxWidth="lg">
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", md: "row" },
+              justifyContent: "space-between",
+              alignItems: { xs: "center", md: "flex-start" },
+              gap: 4, // Added gap for better spacing
+            }}
+          >
+            {/* Logo and Description */}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: { xs: "center", md: "flex-start" },
+                mb: { xs: 3, md: 0 },
+                maxWidth: { xs: "100%", md: "40%" },
+              }}
+            >
+              <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                {" "}
+                {/* Increased margin bottom */}
+                <LocalCafeIcon
+                  sx={{ mr: 1.5, color: colors.normal, fontSize: 32 }} // Increased size and spacing
+                />
+                <Typography
+                  variant="h6"
+                  color="primary"
+                  sx={{ fontWeight: 700, fontSize: "1.3rem" }} // Increased size
+                >
+                  Tea Gathering
+                </Typography>
+              </Box>
+              <Typography
+                variant="body1" // Changed from body2 for better readability
+                color="text.secondary"
+                align={isMobile ? "center" : "left"}
+                sx={{ maxWidth: "90%" }} // Added max-width for better text wrapping
+              >
+                Join us for a delightful evening of networking and refreshments
+                at Stamford University Bangladesh's annual Tea Gathering event.
+              </Typography>
+            </Box>
+
+            {/* Quick Links */}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: { xs: "center", md: "flex-start" },
+                mb: { xs: 3, md: 0 },
+              }}
+            >
+              <Typography
+                variant="subtitle1"
+                color="primary"
+                sx={{ mb: 2.5, fontWeight: 700, fontSize: "1.1rem" }} // Enhanced heading
+              >
+                Quick Links
+              </Typography>
+
+              <Button
+                href="/"
+                sx={{
+                  color: colors.normal, // Changed to primary color for better visibility
+                  mb: 1.5, // Increased spacing between buttons
+                  fontWeight: 500,
+                  "&:hover": {
+                    backgroundColor: `${colors.light}50`,
+                  },
+                }}
+                startIcon={<HomeIcon fontSize="small" />}
+              >
+                Home
+              </Button>
+
+              <Button
+                href="/admin"
+                sx={{
+                  color: colors.normal, // Changed to primary color for better visibility
+                  mb: 1.5, // Increased spacing
+                  fontWeight: 500,
+                  "&:hover": {
+                    backgroundColor: `${colors.light}50`,
+                  },
+                }}
+                startIcon={<AdminPanelSettingsIcon fontSize="small" />}
+              >
+                Admin
+              </Button>
+            </Box>
+
+            {/* Contact Info */}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: { xs: "center", md: "flex-start" },
+                minWidth: { xs: "auto", md: "200px" }, // Added min-width for better alignment
+              }}
+            >
+              <Typography
+                variant="subtitle1"
+                color="primary"
+                sx={{ mb: 2.5, fontWeight: 700, fontSize: "1.1rem" }} // Enhanced heading
+              >
+                Contact
+              </Typography>
+
+              <Typography
+                variant="body1" // Changed from body2 for better readability
+                color={colors.normalHover} // Changed for better visibility
+                align={isMobile ? "center" : "left"}
+                sx={{
+                  mb: 2,
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <EmailIcon
+                  fontSize="small"
+                  sx={{
+                    mr: 1.5,
+                    verticalAlign: "middle",
+                    color: colors.normal,
+                  }}
+                />
+                tea-gathering@stamford.edu
+              </Typography>
+
+              <Box sx={{ display: "flex", gap: 1.5, mt: 1 }}>
+                <IconButton
+                  size="medium"
+                  sx={{
+                    color: colors.normal,
+                    backgroundColor: `${colors.light}60`, // Added background
+                    "&:hover": {
+                      backgroundColor: colors.light,
+                    },
+                  }}
+                >
+                  <FacebookIcon />
+                </IconButton>
+                <IconButton
+                  size="medium"
+                  sx={{
+                    color: colors.normal,
+                    backgroundColor: `${colors.light}60`, // Added background
+                    "&:hover": {
+                      backgroundColor: colors.light,
+                    },
+                  }}
+                >
+                  <InstagramIcon />
+                </IconButton>
+                <IconButton
+                  size="medium"
+                  sx={{
+                    color: colors.normal,
+                    backgroundColor: `${colors.light}60`, // Added background
+                    "&:hover": {
+                      backgroundColor: colors.light,
+                    },
+                  }}
+                >
+                  <TwitterIcon />
+                </IconButton>
+                <IconButton
+                  size="medium"
+                  sx={{
+                    color: colors.normal,
+                    backgroundColor: `${colors.light}60`, // Added background
+                    "&:hover": {
+                      backgroundColor: colors.light,
+                    },
+                  }}
+                >
+                  <LinkedInIcon />
+                </IconButton>
+              </Box>
+            </Box>
+          </Box>
+          <Divider sx={{ my: 4, borderColor: `${colors.lightActive}` }} />{" "}
+          {/* Enhanced divider */}
+          <Box sx={{ textAlign: "center" }}>
+            <Typography variant="body2" color="text.secondary" fontWeight={500}>
+              © {new Date().getFullYear()} Tea Gathering | Stamford University
+              Bangladesh
+            </Typography>
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              sx={{ mt: 1.5, display: "block", fontSize: "0.8rem" }} // Increased margin and font size
+            >
+              Designed with 💜 by the Stamford University Dev Team
+            </Typography>
+          </Box>
+        </Container>
+      </Box>
+    </Box>
+  );
+};
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <AppContent />
+      </Router>
+    </ThemeProvider>
   );
 }
 

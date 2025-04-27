@@ -1,46 +1,138 @@
-# Getting Started with Create React App
+# Tea Gathering Registration Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A professional and elegant registration website for the Tea Gathering event at Stamford University Bangladesh.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Landing Page**:
 
-### `npm start`
+  - Event details display (Title, Date, Venue)
+  - Registration form with all required fields
+  - Responsive design with violet-based theme
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **Registration Form**:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+  - Full Name
+  - Contact Number
+  - Present Company Name
+  - Current Position
+  - Batch
+  - Student ID
+  - Email Address
+  - Profile Picture Upload
+  - Address
 
-### `npm test`
+- **Confirmation Page**:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  - Registration confirmation message
+  - QR code embedded into ticket layout
+  - Downloadable PDF ticket
+  - Information about entry requirements
 
-### `npm run build`
+- **Admin/Management Page**:
+  - View all registered attendee data
+  - Toggle column visibility
+  - Export selected data columns to Excel
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Design
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The website follows a professional violet-themed design with these color codes:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Light: #e9e9f0
+- Light Hover: #dedee8
+- Light Active: #bbbacf
+- Normal (Primary Color): #252265
+- Normal Hover: #211f5b
+- Normal Active: #1e1b51
+- Dark: #1c1a4c
+- Dark Hover: #16143d
+- Dark Active: #110f2d
+- Darker: #0d0c23
 
-### `npm run eject`
+## Technologies Used
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- React with TypeScript
+- Material-UI (MUI) for UI components
+- React Router for navigation
+- React Hook Form for form validation
+- QR Code generation
+- PDF generation with jsPDF and html-to-image
+- Excel export functionality
+- Local storage for data persistence
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Getting Started
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Prerequisites
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Node.js (v14.0.0 or higher)
+- npm (v6.0.0 or higher)
 
-## Learn More
+### Installation
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Clone the repository:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+git clone [repository-url]
+```
+
+2. Navigate to the project directory:
+
+```
+cd tea-gathering-website
+```
+
+3. Install dependencies:
+
+```
+npm install
+```
+
+4. Start the development server:
+
+```
+npm start
+```
+
+5. Open your browser and visit:
+
+```
+http://localhost:3000
+```
+
+## Usage
+
+### Registration Process
+
+1. Fill out the registration form on the landing page
+2. Submit the form to register for the event
+3. Receive a confirmation with a downloadable ticket containing a QR code
+4. Download and save the ticket for entry to the event
+
+### Admin Access
+
+1. Navigate to `/admin` route
+2. View all registered attendees in a table format
+3. Select which columns to display
+4. Export the selected columns to an Excel file
+
+## Production Build
+
+To create a production build:
+
+```
+npm run build
+```
+
+The build files will be located in the `build` folder.
+
+## Responsive Design
+
+The website is fully responsive and optimized for:
+
+- Desktop devices
+- Tablets
+- Mobile phones
+
+## License
+
+This project is licensed under the MIT License.
