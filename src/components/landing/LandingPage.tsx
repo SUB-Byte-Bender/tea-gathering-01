@@ -20,7 +20,8 @@ import InfoIcon from "@mui/icons-material/Info";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 // Styled components for the landing page with improved animations and styling
-const HeroSection = styled(Box)(({ theme }) => ({  // Hero Section Of Landing Page
+const HeroSection = styled(Box)(({ theme }) => ({
+  // Hero Section Of Landing Page
   backgroundColor: colors.normal,
   color: "white",
   padding: theme.spacing(14, 0, 12),
@@ -139,8 +140,9 @@ const TeaCupShape = styled(Box)(({ theme }) => ({
   },
 }));
 
-const EventDetails = styled(Paper)(({ theme }) => ({ // Event Details Section
-  padding: theme.spacing(2.5,4,4,4), //  2.5 for top, 3 for right, 2 for bottom, 1 for left
+const EventDetails = styled(Paper)(({ theme }) => ({
+  // Event Details Section
+  padding: theme.spacing(2.5, 4, 4, 4), //  2.5 for top, 3 for right, 2 for bottom, 1 for left
 
   marginTop: theme.spacing(0),
   borderRadius: 16,
@@ -174,9 +176,10 @@ const DetailItem = styled(Box)(({ theme }) => ({
   },
 }));
 
-const FormSection = styled(Paper)(({ theme }) => ({ // Registration Form Section
+const FormSection = styled(Paper)(({ theme }) => ({
+  // Registration Form Section
   // padding: theme.spacing(4),
-  padding: theme.spacing(2.5,4,4,4), //  2.5 for top, 3 for right, 2 for bottom, 1 for left
+  padding: theme.spacing(2.5, 4, 4, 4), //  2.5 for top, 3 for right, 2 for bottom, 1 for left
 
   marginTop: theme.spacing(0),
   borderRadius: 16,
@@ -235,7 +238,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const heroSection = document.querySelector('.hero-section');
+      const heroSection = document.querySelector(".hero-section");
       if (heroSection) {
         const heroHeight = heroSection.getBoundingClientRect().height;
       }
@@ -351,20 +354,73 @@ const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
                   Event Details
                 </Typography>
 
-                <DetailItem>
-                  <EventIcon fontSize="large" />
-                  <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
-                    <strong>Date:</strong> 19th July, 2025 | 5:00 PM
+                {/* Date Card */}
+                <Box
+                  sx={{
+                    bgcolor: "#E0F2FE",
+                    borderRadius: 2,
+                    p: 2,
+                    mb: 2,
+                    width: "100%",
+                    textAlign: "center",
+                  }}
+                >
+                  <EventIcon
+                    sx={{ color: colors.normal, fontSize: "1.8rem", mb: 1 }}
+                  />
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontWeight: 400,
+                      fontSize: "0.95rem",
+                    }}
+                  >
+                    <strong>Date & Time</strong>
                   </Typography>
-                </DetailItem>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontWeight: 400,
+                      fontSize: "0.95rem",
+                    }}
+                  >
+                    19th July, 2025 | 5:00 PM
+                  </Typography>
+                </Box>
 
-                <DetailItem>
-                  <LocationOnIcon fontSize="large" />
-                  <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
-                    <strong>Venue:</strong> Auditorium, Stamford University
-                    Bangladesh
+                {/* Venue Card */}
+                <Box
+                  sx={{
+                    bgcolor: "#E0F2FE",
+                    borderRadius: 2,
+                    p: 2,
+                    mb: 2,
+                    width: "100%",
+                    textAlign: "center",
+                  }}
+                >
+                  <LocationOnIcon
+                    sx={{ color: colors.normal, fontSize: "1.8rem", mb: 1 }}
+                  />
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontWeight: 400,
+                      fontSize: "0.95rem",
+                    }}
+                  >
+                    <strong>Venue</strong>
                   </Typography>
-                </DetailItem>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontWeight: 400,
+                      fontSize: "0.95rem",
+                    }}
+                  >
+                    Auditorium, Stamford University Bangladesh
+                  </Typography>
+                </Box>
 
                 <Box
                   mt={4}
@@ -408,7 +464,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
             </Grid>
 
             <Grid component="div" item xs={12} md={7}>
-              <Box ref={formRef} id="registration-form"> {/* Registration Form Section */}
+              <Box ref={formRef} id="registration-form">
+                {" "}
+                {/* Registration Form Section */}
                 <FormSection elevation={3}>
                   <Typography
                     variant="h3"
@@ -425,11 +483,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
                   >
                     Registration Form
                   </Typography>
-                  <Box sx={{ 
-                    '& .MuiGrid-root:last-child': { 
-                      marginTop: '-2px !important' 
-                    }
-                  }}>
+                  <Box
+                    sx={{
+                      "& .MuiGrid-root:last-child": {
+                        marginTop: "-2px !important",
+                      },
+                    }}
+                  >
                     <RegistrationForm />
                   </Box>
                 </FormSection>
