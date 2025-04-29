@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Container,
   Box,
@@ -9,18 +9,21 @@ import {
   useMediaQuery,
   useTheme,
   Divider,
+  Fab,
+  Zoom,
 } from "@mui/material";
 import { colors } from "../../styles/theme";
 import RegistrationForm from "../registration/RegistrationForm";
 import EventIcon from "@mui/icons-material/Event";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import InfoIcon from "@mui/icons-material/Info";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 // Styled components for the landing page with improved animations and styling
 const HeroSection = styled(Box)(({ theme }) => ({
   backgroundColor: colors.normal,
   color: "white",
-  padding: theme.spacing(14, 0, 12), // Increased vertical padding for a more spacious hero
+  padding: theme.spacing(14, 0, 12),
   borderRadius: "0",
   textAlign: "center",
   position: "relative",
@@ -35,7 +38,6 @@ const HeroSection = styled(Box)(({ theme }) => ({
     background: `linear-gradient(135deg, ${colors.normal} 0%, ${colors.normalHover} 100%)`,
     zIndex: 0,
   },
-  // Add decorative elements
   "&::after": {
     content: '""',
     position: "absolute",
@@ -71,7 +73,6 @@ const HeroSection = styled(Box)(({ theme }) => ({
   },
 }));
 
-// New styled components for improved hero section
 const HeroContentWrapper = styled(Box)(({ theme }) => ({
   position: "relative",
   maxWidth: "900px",
@@ -108,7 +109,6 @@ const CircleDecoration = styled(Box)(({ theme }) => ({
   zIndex: 0,
 }));
 
-// Enhanced animated title
 const AnimatedTitle = styled(Typography)(({ theme }) => ({
   animation: "fadeInDown 1.2s ease-out",
   "@keyframes fadeInDown": {
@@ -123,7 +123,6 @@ const AnimatedTitle = styled(Typography)(({ theme }) => ({
   },
 }));
 
-// Animated subtitle with a different animation timing
 const AnimatedSubtitle = styled(Typography)(({ theme }) => ({
   animation: "fadeInUp 1.2s ease-out 0.3s forwards",
   opacity: 0,
@@ -139,7 +138,6 @@ const AnimatedSubtitle = styled(Typography)(({ theme }) => ({
   },
 }));
 
-// Decorative shapes
 const TeaCupShape = styled(Box)(({ theme }) => ({
   position: "absolute",
   width: "180px",
@@ -176,7 +174,7 @@ const TeaCupShape = styled(Box)(({ theme }) => ({
 
 const EventDetails = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),
-  marginTop: theme.spacing(0), // Changed from -5 to 0 to align with registration form
+  marginTop: theme.spacing(0),
   borderRadius: 16,
   boxShadow: "0 8px 30px rgba(13, 12, 35, 0.1)",
   zIndex: 2,
@@ -184,7 +182,7 @@ const EventDetails = styled(Paper)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  height: "100%", // Added to ensure equal height with registration form
+  height: "100%",
   background: `linear-gradient(to bottom, ${colors.light}, #ffffff)`,
   transition: "transform 0.3s ease-in-out",
   "&:hover": {
@@ -192,7 +190,7 @@ const EventDetails = styled(Paper)(({ theme }) => ({
     boxShadow: "0 12px 40px rgba(13, 12, 35, 0.15)",
   },
   [theme.breakpoints.down("sm")]: {
-    marginTop: theme.spacing(0), // Changed from -3 to 0
+    marginTop: theme.spacing(0),
     padding: theme.spacing(3),
   },
 }));
@@ -210,12 +208,12 @@ const DetailItem = styled(Box)(({ theme }) => ({
 
 const FormSection = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),
-  marginTop: theme.spacing(0), // Changed from 4 to 0 to align with event details
+  marginTop: theme.spacing(0),
   borderRadius: 16,
   boxShadow: "0 8px 30px rgba(13, 12, 35, 0.1)",
   background: "white",
   position: "relative",
-  height: "100%", // Added to ensure equal height with event details
+  height: "100%",
   overflow: "hidden",
   "&::after": {
     content: '""',
@@ -237,14 +235,50 @@ const FormSection = styled(Paper)(({ theme }) => ({
   },
 }));
 
-// Landing page component
-const LandingPage: React.FC = () => {
+const ScrollToTopButton = styled(Fab)(({ theme }) => ({
+  position: "fixed",
+  bottom: theme.spacing(4),
+  right: theme.spacing(4),
+  zIndex: 1000,
+  backgroundColor: colors.normal,
+  color: "white",
+  boxShadow: "0 4px 14px rgba(37, 34, 101, 0.25)",
+  transition: "all 0.3s ease",
+  "&:hover": {
+    backgroundColor: colors.normalHover,
+    transform: "translateY(-5px)",
+    boxShadow: "0 6px 20px rgba(37, 34, 101, 0.35)",
+  },
+  [theme.breakpoints.down("sm")]: {
+    bottom: theme.spacing(3),
+    right: theme.spacing(3),
+  },
+}));
+
+interface LandingPageProps {
+  formRef?: React.RefObject<HTMLDivElement>;
+}
+
+const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroSection = document.querySelector('.hero-section');
+      if (heroSection) {
+        const heroHeight = heroSection.getBoundingClientRect().height;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <Box>
-      <HeroSection>
+      <HeroSection className="hero-section">
         <CircleDecoration className="circle1" />
         <CircleDecoration className="circle2" />
         <CircleDecoration className="circle3" />
@@ -404,24 +438,26 @@ const LandingPage: React.FC = () => {
             </Grid>
 
             <Grid component="div" item xs={12} md={7}>
-              <FormSection elevation={3}>
-                <Typography
-                  variant="h3"
-                  component="h2"
-                  gutterBottom
-                  color="primary"
-                  sx={{
-                    fontWeight: 600,
-                    fontSize: isMobile ? "1.8rem" : "2.2rem",
-                    borderBottom: `2px solid ${colors.light}`,
-                    paddingBottom: 1,
-                    marginBottom: 2,
-                  }}
-                >
-                  Registration Form
-                </Typography>
-                <RegistrationForm />
-              </FormSection>
+              <Box ref={formRef} id="registration-form">
+                <FormSection elevation={3}>
+                  <Typography
+                    variant="h3"
+                    component="h2"
+                    gutterBottom
+                    color="primary"
+                    sx={{
+                      fontWeight: 600,
+                      fontSize: isMobile ? "1.8rem" : "2.2rem",
+                      borderBottom: `2px solid ${colors.light}`,
+                      paddingBottom: 1,
+                      marginBottom: 2,
+                    }}
+                  >
+                    Registration Form
+                  </Typography>
+                  <RegistrationForm />
+                </FormSection>
+              </Box>
             </Grid>
           </Grid>
         </Box>

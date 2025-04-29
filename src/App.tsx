@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -25,6 +25,8 @@ import {
   useMediaQuery,
   useTheme,
   Fade,
+  Zoom,
+  Fab,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
@@ -35,6 +37,7 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import theme, { colors } from "./styles/theme";
 import LandingPage from "./components/landing/LandingPage";
 import ConfirmationPage from "./components/confirmation/ConfirmationPage";
@@ -48,11 +51,14 @@ const AppContent = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const formRef = useRef<HTMLDivElement>(null);
 
   // Handle scroll effect for AppBar
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
+      setShowScrollTop(window.scrollY > window.innerHeight - 100);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -69,6 +75,28 @@ const AppContent = () => {
     if (mobileOpen) setMobileOpen(false);
   };
 
+  // Scroll to registration form
+  const scrollToForm = () => {
+    if (location.pathname !== "/") {
+      // If not on home page, navigate to home and then scroll after a delay
+      window.location.href = "/";
+      setTimeout(() => {
+        const formElement = document.querySelector('#registration-form');
+        formElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 500);
+    } else {
+      // If already on home page, just scroll
+      const formElement = document.querySelector('#registration-form');
+      formElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    if (mobileOpen) setMobileOpen(false);
+  };
+
+  // Scroll to top handler
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   // Menu items
   const menuItems = [
     { label: "Home", path: "/", icon: <HomeIcon /> },
@@ -77,15 +105,16 @@ const AppContent = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      {/* Header with navigation - Updated to match scroll behavior requirements */}
+      {/* Header with navigation - Updated to be transparent and positioned inside hero */}
       <AppBar
-        position="sticky"
+        position="absolute"
         sx={{
-          backgroundColor: scrolled
-            ? "rgba(255, 255, 255, 0.95)" // White with transparency when scrolled
-            : colors.normal, // Violet theme color when not scrolled
-          boxShadow: scrolled ? "0 4px 20px rgba(13, 12, 35, 0.1)" : "none",
+          backgroundColor: "transparent",
+          boxShadow: "none",
           transition: "all 0.3s ease",
+          zIndex: 1100,
+          top: 0,
+          width: '100%'
         }}
         elevation={0}
       >
@@ -109,9 +138,7 @@ const AppContent = () => {
                 sx={{
                   display: "flex",
                   alignItems: "center",
-                  background: scrolled
-                    ? "transparent"
-                    : "rgba(255, 255, 255, 0.15)",
+                  background: "rgba(255, 255, 255, 0.15)",
                   px: 2,
                   py: 0.8,
                   borderRadius: 1.5,
@@ -121,7 +148,7 @@ const AppContent = () => {
               >
                 <LocalCafeIcon
                   sx={{
-                    color: scrolled ? colors.normal : "white",
+                    color: "white",
                     fontSize: "1.8rem",
                     mr: 1,
                     transition: "color 0.3s ease",
@@ -133,7 +160,7 @@ const AppContent = () => {
                   sx={{
                     fontWeight: 700,
                     fontSize: "1.3rem",
-                    color: scrolled ? colors.normal : "white",
+                    color: "white",
                     transition: "color 0.3s ease",
                   }}
                 >
@@ -158,24 +185,19 @@ const AppContent = () => {
                       mx: 0.5,
                       px: 2,
                       py: 1,
-                      color: scrolled ? colors.normal : "white",
+                      color: "white",
                       fontWeight: 500,
                       borderRadius: 1,
                       textTransform: "none",
                       fontSize: "1rem",
                       letterSpacing: 0.5,
                       transition: "all 0.2s ease",
-                      backgroundColor: scrolled
-                        ? location.pathname === item.path
-                          ? `${colors.light}40`
-                          : "transparent"
-                        : location.pathname === item.path
-                        ? "rgba(255, 255, 255, 0.15)"
-                        : "transparent",
+                      backgroundColor: 
+                        location.pathname === item.path
+                          ? "rgba(255, 255, 255, 0.15)"
+                          : "transparent",
                       "&:hover": {
-                        backgroundColor: scrolled
-                          ? `${colors.light}60`
-                          : "rgba(255, 255, 255, 0.25)",
+                        backgroundColor: "rgba(255, 255, 255, 0.25)",
                       },
                     }}
                     startIcon={item.icon}
@@ -187,22 +209,20 @@ const AppContent = () => {
                 {/* Call to action button */}
                 <Button
                   variant="contained"
-                  href="/"
+                  onClick={scrollToForm}
                   sx={{
                     ml: 2,
                     px: 2.5,
                     py: 1,
-                    backgroundColor: scrolled ? colors.normal : "white",
-                    color: scrolled ? "white" : colors.normal,
+                    backgroundColor: "white",
+                    color: colors.normal,
                     fontWeight: 600,
                     borderRadius: 1,
                     textTransform: "none",
                     fontSize: "0.95rem",
                     boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
                     "&:hover": {
-                      backgroundColor: scrolled
-                        ? colors.normalHover
-                        : colors.light,
+                      backgroundColor: colors.light,
                     },
                     transition: "all 0.3s ease",
                   }}
@@ -217,21 +237,19 @@ const AppContent = () => {
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Button
                   variant="contained"
-                  href="/"
+                  onClick={scrollToForm}
                   size="small"
                   sx={{
                     mr: 1.5,
-                    backgroundColor: scrolled ? colors.normal : "white",
-                    color: scrolled ? "white" : colors.normal,
+                    backgroundColor: "white", 
+                    color: colors.normal,
                     fontWeight: 600,
                     borderRadius: 1,
                     textTransform: "none",
                     boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
                     transition: "all 0.3s ease",
                     "&:hover": {
-                      backgroundColor: scrolled
-                        ? colors.normalHover
-                        : colors.light,
+                      backgroundColor: colors.light,
                     },
                   }}
                 >
@@ -244,14 +262,10 @@ const AppContent = () => {
                   edge="end"
                   onClick={handleDrawerToggle}
                   sx={{
-                    color: scrolled ? colors.normal : "white",
-                    backgroundColor: scrolled
-                      ? `${colors.light}30`
-                      : "rgba(255, 255, 255, 0.1)",
+                    color: "white",
+                    backgroundColor: "rgba(255, 255, 255, 0.1)",
                     "&:hover": {
-                      backgroundColor: scrolled
-                        ? `${colors.light}50`
-                        : "rgba(255, 255, 255, 0.2)",
+                      backgroundColor: "rgba(255, 255, 255, 0.2)",
                     },
                     borderRadius: 1,
                     p: 1,
@@ -357,7 +371,7 @@ const AppContent = () => {
               <Button
                 variant="contained"
                 fullWidth
-                href="/"
+                onClick={scrollToForm}
                 sx={{
                   py: 1.5,
                   backgroundColor: "white",
@@ -384,7 +398,7 @@ const AppContent = () => {
         <Fade in={true} timeout={800}>
           <Box>
             <Routes>
-              <Route path="/" element={<LandingPage />} />
+              <Route path="/" element={<LandingPage formRef={formRef} />} />
               <Route path="/confirmation/:id" element={<ConfirmationPage />} />
               <Route path="/admin" element={<AdminPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
@@ -392,6 +406,28 @@ const AppContent = () => {
           </Box>
         </Fade>
       </Box>
+
+      {/* Scroll to Top Button */}
+      <Zoom in={showScrollTop}>
+        <Fab
+          color="primary"
+          size="medium"
+          aria-label="scroll back to top"
+          onClick={scrollToTop}
+          sx={{
+            position: 'fixed',
+            bottom: 24,
+            right: 24,
+            boxShadow: '0 4px 12px rgba(37, 34, 101, 0.25)',
+            backgroundColor: colors.normal,
+            '&:hover': {
+              backgroundColor: colors.normalHover,
+            }
+          }}
+        >
+          <KeyboardArrowUpIcon />
+        </Fab>
+      </Zoom>
 
       {/* Enhanced Footer */}
       <Box
