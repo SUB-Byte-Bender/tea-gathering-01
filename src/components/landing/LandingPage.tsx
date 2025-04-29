@@ -143,18 +143,19 @@ const TeaCupShape = styled(Box)(({ theme }) => ({
 const EventDetails = styled(Paper)(({ theme }) => ({
   // Event Details Section
   padding: theme.spacing(2.5, 4, 4, 4), //  2.5 for top, 3 for right, 20 for bottom, 4 for left
-
   marginTop: theme.spacing(0),
   borderRadius: 16,
   boxShadow: "0 8px 30px rgba(13, 12, 35, 0.1)",
   zIndex: 2,
-  position: "relative",
+  position: "sticky", // Make it sticky
+  top: theme.spacing(3), // Top position when sticky
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   height: "auto",
-  // background: `linear-gradient(to bottom, ${colors.light}, #ffffff)`, // Background Gradient
-  transition: "transform 0.3s ease-in-out",
+  maxHeight: `calc(100vh - ${theme.spacing(6)})`, // Ensure it fits in viewport
+  overflowY: "auto", // Allow scrolling if content is too tall
+  transition: "all 0.3s ease-in-out, transform 0.3s ease-in-out", // Smooth transitions
   "&:hover": {
     transform: "translateY(-5px)",
     boxShadow: "0 12px 40px rgba(13, 12, 35, 0.15)",
@@ -162,6 +163,8 @@ const EventDetails = styled(Paper)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     marginTop: theme.spacing(0),
     padding: theme.spacing(3),
+    position: "relative", // Disable sticky on mobile
+    top: 0,
   },
 }));
 
@@ -333,8 +336,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
 
       <Container maxWidth="lg">  {/* Bottom Border Removed */}
         <Box sx={{ my: 5 }}>
-          <Grid container spacing={isMobile ? 3 : 4}>
-            <Grid component="div" item xs={12} md={5}>
+          <Grid container spacing={isMobile ? 3 : 4} sx={{ position: "relative" }}>
+            <Grid component="div" item xs={12} md={5} sx={{ position: "static" }}>
               <EventDetails elevation={3}>
                 <Typography
                   variant="h3"
