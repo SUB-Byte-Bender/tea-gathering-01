@@ -358,8 +358,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
                 {/* Date Card */}
                 <Box
                   sx={{
-                    bgcolor: "#E0F2FE",
-                    borderRadius: 2,
+                    bgcolor: "#f0f9ff",
+                    borderRadius: 1,
+                    border: `1px solid #cbe4fe`,
+                    position: "relative",
                     p: 2,
                     mb: 2,
                     width: "100%",
@@ -392,8 +394,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
                 {/* Venue Card */}
                 <Box
                   sx={{
-                    bgcolor: "#E0F2FE",
-                    borderRadius: 2,
+                    bgcolor: "#f0f9ff",
+                    borderRadius: 1,
+                    border: `1px solid #cbe4fe`,
+                    position: "relative",
                     p: 2,
                     mb: 2,
                     width: "100%",
@@ -426,7 +430,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
                 <Box
                   mt={4}
                   p={3}
-                  bgcolor={`${colors.light}80`}
+                  // bgcolor={`${colors.light}80`}
+                  bgcolor={`#e0f2fe`}
                   borderRadius={3}
                   width="100%"
                   sx={{
