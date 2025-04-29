@@ -179,7 +179,12 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ buttonStyles = {} }
       </Fade>
 
       <Grid container spacing={isMobile ? 2 : 3}>
-        <Grid component="div" item xs={12}>
+        <Grid 
+          component="div" 
+          item 
+          xs={12}
+          sx={{ pt: '5px !important' }} // Add custom padding-top just for this field
+        >
           <Controller
             name="fullName"
             control={control}
