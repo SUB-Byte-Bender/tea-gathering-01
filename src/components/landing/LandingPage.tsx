@@ -20,7 +20,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 // Styled components for the landing page with improved animations and styling
-const HeroSection = styled(Box)(({ theme }) => ({
+const HeroSection = styled(Box)(({ theme }) => ({  // Hero Section Of Landing Page
   backgroundColor: colors.normal,
   color: "white",
   padding: theme.spacing(14, 0, 12),
@@ -37,39 +37,6 @@ const HeroSection = styled(Box)(({ theme }) => ({
     bottom: 0,
     background: `linear-gradient(135deg, ${colors.normal} 0%, ${colors.normalHover} 100%)`,
     zIndex: 0,
-  },
-  "&::after": {
-    content: '""',
-    position: "absolute",
-    width: "100%",
-    height: "40px",
-    bottom: 0,
-    left: 0,
-    background: `
-      radial-gradient(circle at 20px 0, white 20px, transparent 0),
-      radial-gradient(circle at 60px 0, white 20px, transparent 0),
-      radial-gradient(circle at 100px 0, white 20px, transparent 0),
-      radial-gradient(circle at 140px 0, white 20px, transparent 0),
-      radial-gradient(circle at 180px 0, white 20px, transparent 0),
-      radial-gradient(circle at 220px 0, white 20px, transparent 0),
-      radial-gradient(circle at 260px 0, white 20px, transparent 0),
-      radial-gradient(circle at 300px 0, white 20px, transparent 0),
-      radial-gradient(circle at 340px 0, white 20px, transparent 0),
-      radial-gradient(circle at 380px 0, white 20px, transparent 0),
-      radial-gradient(circle at 420px 0, white 20px, transparent 0),
-      radial-gradient(circle at 460px 0, white 20px, transparent 0),
-      radial-gradient(circle at 500px 0, white 20px, transparent 0)
-    `,
-    backgroundSize: "540px 40px",
-    backgroundRepeat: "repeat-x",
-    zIndex: 1,
-  },
-  "& > *": {
-    position: "relative",
-    zIndex: 2,
-  },
-  [theme.breakpoints.down("sm")]: {
-    padding: theme.spacing(10, 0, 10),
   },
 }));
 
@@ -172,7 +139,7 @@ const TeaCupShape = styled(Box)(({ theme }) => ({
   },
 }));
 
-const EventDetails = styled(Paper)(({ theme }) => ({
+const EventDetails = styled(Paper)(({ theme }) => ({ // Event Details Section
   padding: theme.spacing(4),
   marginTop: theme.spacing(0),
   borderRadius: 16,
@@ -183,7 +150,7 @@ const EventDetails = styled(Paper)(({ theme }) => ({
   flexDirection: "column",
   alignItems: "center",
   height: "100%",
-  background: `linear-gradient(to bottom, ${colors.light}, #ffffff)`,
+  // background: `linear-gradient(to bottom, ${colors.light}, #ffffff)`,
   transition: "transform 0.3s ease-in-out",
   "&:hover": {
     transform: "translateY(-5px)",
