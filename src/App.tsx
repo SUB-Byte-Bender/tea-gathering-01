@@ -34,6 +34,7 @@ import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import EmailIcon from "@mui/icons-material/Email";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import LanguageIcon from '@mui/icons-material/Language';
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
@@ -137,7 +138,7 @@ const AppContent = () => {
               justifyContent: "space-between",
             }}
           >
-            {/* Logo area */}
+            {/* Logo area - Updated to show SVG logos */}
             <Box
               sx={{
                 display: "flex",
@@ -148,34 +149,46 @@ const AppContent = () => {
                 sx={{
                   display: "flex",
                   alignItems: "center",
+                  justifyContent: "center",
                   background: "rgba(255, 255, 255, 0.15)",
-                  px: 2,
-                  py: 0.8,
+                  px: 2.5,
+                  py: 1,
                   borderRadius: 1.5,
                   mr: 2,
                   transition: "all 0.3s ease",
                 }}
               >
-                <LocalCafeIcon
+                <Box 
+                  component="img"
+                  src="/Images/SUB.svg"
+                  alt="SUB Logo" 
                   sx={{
-                    color: "white",
-                    fontSize: "1.8rem",
-                    mr: 1,
-                    transition: "color 0.3s ease",
+                    height: isMobile ? "34px" : "40px",
+                    
+                    width: "auto",
+                    mr: 1.5,
+                    transition: "transform 0.3s ease",
+                    "&:hover": {
+                      transform: "scale(1.05)",
+                    },
                   }}
                 />
-                <Typography
-                  variant="h6"
-                  component="div"
+                <Box 
+                  component="img"
+                  src="/Images/CSE_White.svg"
+                  alt="CSE Logo" 
                   sx={{
-                    fontWeight: 700,
-                    fontSize: "1.3rem",
+                    height: isMobile ? "34px" : "42px",
+                    paddingTop: isMobile ? "2px" : "4px",
                     color: "white",
-                    transition: "color 0.3s ease",
+                    width: "auto",
+                    
+                    transition: "transform 0.3s ease",
+                    "&:hover": {
+                      transform: "scale(1.05)",
+                    },
                   }}
-                >
-                  Tea Gathering
-                </Typography>
+                />
               </Box>
             </Box>
 
@@ -324,19 +337,25 @@ const AppContent = () => {
                 backgroundColor: "white",
               }}
             >
-              <LocalCafeIcon
-                sx={{ mr: 1.5, color: colors.normal, fontSize: 28 }}
-              />
-              <Typography
-                variant="h6"
+              <Box 
+                component="img"
+                src="/Images/SUB.svg"
+                alt="SUB Logo"
                 sx={{
-                  fontWeight: 700,
-                  fontSize: "1.3rem",
-                  color: colors.normal,
+                  height: "32px",
+                  width: "auto",
                 }}
-              >
-                Tea Gathering
-              </Typography>
+              />
+              <Box 
+                component="img"
+                src="/Images/CSE.svg"
+                alt="CSE Logo"
+                sx={{
+                  height: "32px",
+                  width: "auto",
+                  mr: 2,
+                }}
+              />
             </Box>
 
             <List sx={{ p: 2 }}>
@@ -472,18 +491,45 @@ const AppContent = () => {
               }}
             >
               <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-                {" "}
-                {/* Increased margin bottom */}
-                <LocalCafeIcon
-                  sx={{ mr: 1.5, color: colors.normal, fontSize: 32 }} // Increased size and spacing
-                />
-                <Typography
+                {/* Replaced icon with SVG logos in footer */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    mr: 1.5,
+                  }}
+                >
+                  <Box 
+                    component="img"
+                    src="/Images/SUB.svg"
+                    alt="SUB Logo" 
+                    sx={{
+                      height: "50px",
+                      width: "auto",
+                      // I want to change the svg color to #252265
+                      filter: "invert(0.5) sepia(1) saturate(0) hue-rotate(180deg)",
+                    }}
+                  />
+                  <Box 
+                    component="img"
+                    src="/Images/CSE.svg"
+                    alt="CSE Logo" 
+                    sx={{
+                      height: "60px",
+                      marginLeft: "16px",
+                      paddingTop: "8px",
+                      width: "auto",
+                      mr: 1.5,
+                    }}
+                  />
+                </Box>
+                {/* <Typography
                   variant="h6"
                   color="primary"
-                  sx={{ fontWeight: 700, fontSize: "1.3rem" }} // Increased size
+                  sx={{ fontWeight: 700, fontSize: "1.3rem" }}
                 >
                   Tea Gathering
-                </Typography>
+                </Typography> */}
               </Box>
               <Typography
                 variant="body1" // Changed from body2 for better readability
@@ -492,7 +538,7 @@ const AppContent = () => {
                 sx={{ maxWidth: "90%" }} // Added max-width for better text wrapping
               >
                 Join us for a delightful evening of networking and refreshments
-                at Stamford University Bangladesh's annual Tea Gathering event.
+                at Stamford University Bangladesh's Alumni CSE Tea Gathering event.
               </Typography>
             </Box>
 
@@ -561,26 +607,34 @@ const AppContent = () => {
                 Contact
               </Typography>
 
-              <Typography
-                variant="body1" // Changed from body2 for better readability
-                color={colors.normalHover} // Changed for better visibility
-                align={isMobile ? "center" : "left"}
+              {/* Updated to make the URL clickable */}
+              <Button
+                href="https://cse.stamforduniversity.edu.bd/"
+                target="_blank"
+                rel="noopener noreferrer"
+                startIcon={
+                  <LanguageIcon
+                    sx={{
+                      color: colors.normal,
+                    }}
+                  />
+                }
                 sx={{
                   mb: 2,
-                  display: "flex",
-                  alignItems: "center",
+                  color: colors.normalHover,
+                  textTransform: "none",
+                  fontWeight: 400,
+                  fontSize: "1rem",
+                  justifyContent: isMobile ? "center" : "flex-start",
+                  padding: 0,
+                  "&:hover": {
+                    backgroundColor: "transparent",
+                    textDecoration: "underline",
+                  },
                 }}
               >
-                <EmailIcon
-                  fontSize="small"
-                  sx={{
-                    mr: 1.5,
-                    verticalAlign: "middle",
-                    color: colors.normal,
-                  }}
-                />
-                tea-gathering@stamford.edu
-              </Typography>
+                cse.stamforduniversity.edu.bd
+              </Button>
 
               <Box sx={{ display: "flex", gap: 1.5, mt: 1 }}>
                 <IconButton
@@ -638,7 +692,7 @@ const AppContent = () => {
           {/* Enhanced divider */}
           <Box sx={{ textAlign: "center" }}>
             <Typography variant="body2" color="text.secondary" fontWeight={500}>
-              © {new Date().getFullYear()} Tea Gathering | Stamford University
+              © {new Date().getFullYear()} CSE Tea Gathering | Stamford University
               Bangladesh
             </Typography>
             <Typography
