@@ -348,7 +348,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
                     // borderBottom: `2px solid ${colors.light}`,
                     borderBottom: "none",
                     paddingBottom: 1,
-                    marginBottom: 3,
+                    marginBottom: 2.4,
                     width: "100%",
                   }}
                 >
