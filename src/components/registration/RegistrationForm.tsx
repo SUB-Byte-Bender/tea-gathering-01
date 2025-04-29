@@ -14,6 +14,7 @@ import {
   Fade,
   Tooltip,
   Zoom,
+  Autocomplete,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { RegistrationFormData } from "../../types";
@@ -39,6 +40,11 @@ const RegistrationForm: React.FC = () => {
   const [validationStatus, setValidationStatus] = useState<{
     [key: string]: boolean;
   }>({});
+
+  // Create batch options from 011 to 076
+  const batchOptions = Array.from({ length: 66 }, (_, i) => 
+    `${String(i + 11).padStart(3, '0')}`
+  );
 
   const {
     control,
@@ -177,7 +183,7 @@ const RegistrationForm: React.FC = () => {
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Full Name"
+                label="Full Name *"
                 placeholder="Enter your full name"
                 variant="outlined"
                 fullWidth
@@ -221,8 +227,8 @@ const RegistrationForm: React.FC = () => {
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Contact Number"
-                placeholder="e.g., +66812345678"
+                label="Contact Number *"
+                placeholder="e.g: +8801234567891"
                 variant="outlined"
                 fullWidth
                 error={!!errors.contactNumber}
@@ -265,7 +271,7 @@ const RegistrationForm: React.FC = () => {
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Email Address"
+                label="Email Address *"
                 placeholder="your.email@example.com"
                 variant="outlined"
                 fullWidth
@@ -303,7 +309,7 @@ const RegistrationForm: React.FC = () => {
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Present Company Name"
+                label="Present Company Name *"
                 placeholder="Your current workplace"
                 variant="outlined"
                 fullWidth
@@ -341,8 +347,8 @@ const RegistrationForm: React.FC = () => {
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Current Position"
-                placeholder="e.g., Marketing Manager"
+                label="Current Position *"
+                placeholder="e.g: Senior Software Engineer"
                 variant="outlined"
                 fullWidth
                 error={!!errors.currentPosition}
@@ -377,26 +383,45 @@ const RegistrationForm: React.FC = () => {
             control={control}
             rules={{ required: "Batch is required" }}
             render={({ field }) => (
-              <TextField
+              <Autocomplete
                 {...field}
-                label="Batch"
-                placeholder="e.g., MBA-23 or BBA-24"
-                variant="outlined"
-                fullWidth
-                error={!!errors.batch}
-                helperText={errors.batch?.message}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      {getAdornment("batch")}
-                    </InputAdornment>
-                  ),
-                  endAdornment: validationStatus.batch && (
-                    <InputAdornment position="end">
-                      <CheckCircleOutlineIcon color="success" />
-                    </InputAdornment>
-                  ),
-                }}
+                options={batchOptions}
+                freeSolo
+                value={field.value}
+                onChange={(_, value) => field.onChange(value)}
+                onInputChange={(_, value) => field.onChange(value)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Batch *"
+                    placeholder="e.g: 033"
+                    variant="outlined"
+                    fullWidth
+                    error={!!errors.batch}
+                    helperText={errors.batch?.message}
+                    InputProps={{
+                      ...params.InputProps,
+                      startAdornment: (
+                        <>
+                          <InputAdornment position="start">
+                            {getAdornment("batch")}
+                          </InputAdornment>
+                          {params.InputProps.startAdornment}
+                        </>
+                      ),
+                      endAdornment: (
+                        <>
+                          {validationStatus.batch && (
+                            <InputAdornment position="end">
+                              <CheckCircleOutlineIcon color="success" />
+                            </InputAdornment>
+                          )}
+                          {params.InputProps.endAdornment}
+                        </>
+                      ),
+                    }}
+                  />
+                )}
                 sx={{
                   "& .MuiOutlinedInput-root": {
                     "&.Mui-focused": {
@@ -414,17 +439,16 @@ const RegistrationForm: React.FC = () => {
             name="studentId"
             control={control}
             rules={{
-              required: "Student ID is required",
               pattern: {
-                value: /^\d{8}$/,
-                message: "Please enter a valid 8-digit student ID",
+                value: /^\d+$/,
+                message: "Please enter a valid student ID (numbers only)",
               },
             }}
             render={({ field }) => (
               <TextField
                 {...field}
                 label="Student ID"
-                placeholder="8-digit student ID"
+                placeholder="e.g: 08514"
                 variant="outlined"
                 fullWidth
                 error={!!errors.studentId}
@@ -457,7 +481,6 @@ const RegistrationForm: React.FC = () => {
           <Controller
             name="address"
             control={control}
-            rules={{ required: "Address is required" }}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -466,7 +489,7 @@ const RegistrationForm: React.FC = () => {
                 variant="outlined"
                 fullWidth
                 multiline
-                rows={3}
+                rows={1}
                 error={!!errors.address}
                 helperText={errors.address?.message}
                 InputProps={{
@@ -509,7 +532,7 @@ const RegistrationForm: React.FC = () => {
               fontWeight="500"
               color="primary"
             >
-              Profile Picture
+              Profile Picture *
             </Typography>
 
             <input
@@ -522,10 +545,17 @@ const RegistrationForm: React.FC = () => {
 
             <label htmlFor="profile-picture-upload">
               <Tooltip
-                title="Upload a profile picture for your event badge"
+                title="Upload a casual picture of yourself that could be featured on the event banner"
                 placement="top"
                 TransitionComponent={Zoom}
                 arrow
+                componentsProps={{
+                  tooltip: {
+                    sx: {
+                      textAlign: 'center',
+                    }
+                  }
+                }}
               >
                 <Button
                   variant="outlined"
