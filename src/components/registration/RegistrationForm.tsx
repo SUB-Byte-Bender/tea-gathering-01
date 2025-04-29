@@ -107,11 +107,11 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ buttonStyles = {} }
         return;
       }
 
-      // Check file size (max 2MB)
-      if (file.size > 2 * 1024 * 1024) {
-        setError("Image size should be less than 2MB");
-        return;
-      }
+      // Check file size (max 2MB)   // Validation of Picture Size Limit
+      // if (file.size > 2 * 1024 * 1024) {
+      //   setError("Image size should be less than 2MB");
+      //   return;
+      // }
 
       setError(null);
       setValue("profilePicture", file);
