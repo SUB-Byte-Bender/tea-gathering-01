@@ -3,7 +3,7 @@
 A professional and elegant registration website for the Tea Gathering event at Stamford University Bangladesh.
 
 ## Plan to add
-- **Cursor Follower**:
+- **Cursor Follower**:ok
 
   - https://cuberto.com/tutorials/39/
   - https://artbit.github.io/mouse-follower/demos/?basic
