@@ -425,7 +425,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
                   >
                     Registration Form
                   </Typography>
-                  <RegistrationForm />
+                  <Box sx={{ 
+                    '& .MuiGrid-root:last-child': { 
+                      marginTop: '-2px !important' 
+                    }
+                  }}>
+                    <RegistrationForm />
+                  </Box>
                 </FormSection>
               </Box>
             </Grid>

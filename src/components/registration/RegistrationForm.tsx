@@ -30,7 +30,11 @@ import HomeIcon from "@mui/icons-material/Home";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
-const RegistrationForm: React.FC = () => {
+interface RegistrationFormProps {
+  buttonStyles?: React.CSSProperties | any;
+}
+
+const RegistrationForm: React.FC<RegistrationFormProps> = ({ buttonStyles = {} }) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -623,7 +627,7 @@ const RegistrationForm: React.FC = () => {
           </Box>
         </Grid>
 
-        <Grid component="div" item xs={12} mt={isMobile ? 2 : 3}>
+        <Grid component="div" item xs={12} mt={isMobile ? 2 : 3} sx={buttonStyles}>
           <Button
             type="submit"
             variant="contained"
