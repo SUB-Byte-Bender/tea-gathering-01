@@ -53,12 +53,21 @@ const AppContent = () => {
   const [scrolled, setScrolled] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
+  const navbarRef = useRef<HTMLDivElement>(null);
 
   // Handle scroll effect for AppBar
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
-      setShowScrollTop(window.scrollY > window.innerHeight - 100);
+
+      // Check if navbar is scrolled out of view
+      if (navbarRef.current) {
+        const navbarBottom = navbarRef.current.getBoundingClientRect().bottom;
+        setShowScrollTop(navbarBottom <= 0);
+      } else {
+        // Fallback if ref is not available
+        setShowScrollTop(window.scrollY > 100);
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -81,20 +90,20 @@ const AppContent = () => {
       // If not on home page, navigate to home and then scroll after a delay
       window.location.href = "/";
       setTimeout(() => {
-        const formElement = document.querySelector('#registration-form');
-        formElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const formElement = document.querySelector("#registration-form");
+        formElement?.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 500);
     } else {
       // If already on home page, just scroll
-      const formElement = document.querySelector('#registration-form');
-      formElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const formElement = document.querySelector("#registration-form");
+      formElement?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
     if (mobileOpen) setMobileOpen(false);
   };
 
   // Scroll to top handler
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   // Menu items
@@ -108,13 +117,14 @@ const AppContent = () => {
       {/* Header with navigation - Updated to be transparent and positioned inside hero */}
       <AppBar
         position="absolute"
+        ref={navbarRef}
         sx={{
           backgroundColor: "transparent",
           boxShadow: "none",
           transition: "all 0.3s ease",
           zIndex: 1100,
           top: 0,
-          width: '100%'
+          width: "100%",
         }}
         elevation={0}
       >
@@ -192,7 +202,7 @@ const AppContent = () => {
                       fontSize: "1rem",
                       letterSpacing: 0.5,
                       transition: "all 0.2s ease",
-                      backgroundColor: 
+                      backgroundColor:
                         location.pathname === item.path
                           ? "rgba(255, 255, 255, 0.15)"
                           : "transparent",
@@ -241,7 +251,7 @@ const AppContent = () => {
                   size="small"
                   sx={{
                     mr: 1.5,
-                    backgroundColor: "white", 
+                    backgroundColor: "white",
                     color: colors.normal,
                     fontWeight: 600,
                     borderRadius: 1,
@@ -415,14 +425,14 @@ const AppContent = () => {
           aria-label="scroll back to top"
           onClick={scrollToTop}
           sx={{
-            position: 'fixed',
+            position: "fixed",
             bottom: 24,
             right: 24,
-            boxShadow: '0 4px 12px rgba(37, 34, 101, 0.25)',
+            boxShadow: "0 4px 12px rgba(37, 34, 101, 0.25)",
             backgroundColor: colors.normal,
-            '&:hover': {
+            "&:hover": {
               backgroundColor: colors.normalHover,
-            }
+            },
           }}
         >
           <KeyboardArrowUpIcon />
