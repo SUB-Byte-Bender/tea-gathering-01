@@ -152,7 +152,7 @@ const EventDetails = styled(Paper)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  height: "66%",
+  height: "100%",
   // background: `linear-gradient(to bottom, ${colors.light}, #ffffff)`, // Background Gradient
   transition: "transform 0.3s ease-in-out",
   "&:hover": {
