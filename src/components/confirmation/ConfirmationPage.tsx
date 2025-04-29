@@ -16,7 +16,6 @@ import {
   Fade,
   Slide,
 } from "@mui/material";
-import QRCode from "react-qr-code";
 import { toPng } from "html-to-image";
 import jsPDF from "jspdf";
 import { Attendee } from "../../types";
@@ -213,13 +212,9 @@ const ConfirmationPage: React.FC = () => {
 
   // Generate the QR code content
   const qrCodeContent = attendee
-    ? JSON.stringify({
-        id: attendee.id,
-        name: attendee.fullName,
-        studentId: attendee.studentId,
-        batch: attendee.batch,
-        ticketNumber: generateTicketNumber(attendee.id),
-      })
+    ? `https://quickchart.io/qr?text=${encodeURIComponent(
+        attendee.contactNumber
+      )}&dark=004b8d&size=500&format=svg`
     : "";
 
   // Handle downloading the ticket as PDF
@@ -472,12 +467,13 @@ const ConfirmationPage: React.FC = () => {
                 <Grid container spacing={isMedium ? 3 : 4} alignItems="center">
                   <Grid component="div" item xs={12} md={4}>
                     <QRCodeContainer>
-                      <QRCode
-                        value={qrCodeContent}
-                        size={isMobile ? 130 : 170}
-                        fgColor={colors.dark}
-                        bgColor="white"
-                        level="H"
+                      <img
+                        src={qrCodeContent}
+                        alt="QR Code"
+                        style={{
+                          width: isMobile ? "130px" : "170px",
+                          height: isMobile ? "130px" : "170px",
+                        }}
                       />
                     </QRCodeContainer>
 
