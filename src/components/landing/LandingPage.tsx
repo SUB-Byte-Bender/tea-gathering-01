@@ -140,7 +140,8 @@ const TeaCupShape = styled(Box)(({ theme }) => ({
 }));
 
 const EventDetails = styled(Paper)(({ theme }) => ({ // Event Details Section
-  padding: theme.spacing(4),
+  padding: theme.spacing(2.5,4,4,4), //  2.5 for top, 3 for right, 2 for bottom, 1 for left
+
   marginTop: theme.spacing(0),
   borderRadius: 16,
   boxShadow: "0 8px 30px rgba(13, 12, 35, 0.1)",
@@ -150,7 +151,7 @@ const EventDetails = styled(Paper)(({ theme }) => ({ // Event Details Section
   flexDirection: "column",
   alignItems: "center",
   height: "100%",
-  // background: `linear-gradient(to bottom, ${colors.light}, #ffffff)`,
+  // background: `linear-gradient(to bottom, ${colors.light}, #ffffff)`, // Background Gradient
   transition: "transform 0.3s ease-in-out",
   "&:hover": {
     transform: "translateY(-5px)",
@@ -173,8 +174,10 @@ const DetailItem = styled(Box)(({ theme }) => ({
   },
 }));
 
-const FormSection = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(4),
+const FormSection = styled(Paper)(({ theme }) => ({ // Registration Form Section
+  // padding: theme.spacing(4),
+  padding: theme.spacing(2.5,4,4,4), //  2.5 for top, 3 for right, 2 for bottom, 1 for left
+
   marginTop: theme.spacing(0),
   borderRadius: 16,
   boxShadow: "0 8px 30px rgba(13, 12, 35, 0.1)",
