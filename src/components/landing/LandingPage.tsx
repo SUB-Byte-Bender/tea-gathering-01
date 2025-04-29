@@ -328,7 +328,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
         </HeroContentWrapper>
       </HeroSection>
 
-      <Container maxWidth="lg">
+      <Container maxWidth="lg">  {/* Bottom Border Removed */}
         <Box sx={{ my: 5 }}>
           <Grid container spacing={isMobile ? 3 : 4}>
             <Grid component="div" item xs={12} md={5}>
@@ -342,7 +342,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
                   sx={{
                     fontWeight: 600,
                     fontSize: isMobile ? "1.8rem" : "2.2rem",
-                    borderBottom: `2px solid ${colors.light}`,
+                    // borderBottom: `2px solid ${colors.light}`,
+                    borderBottom: "none",
                     paddingBottom: 1,
                     marginBottom: 3,
                     width: "100%",
