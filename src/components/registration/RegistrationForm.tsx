@@ -178,6 +178,7 @@ const RegistrationForm: React.FC = () => {
               <TextField
                 {...field}
                 label="Full Name"
+                placeholder="Enter your full name"
                 variant="outlined"
                 fullWidth
                 error={!!errors.fullName}
@@ -221,6 +222,7 @@ const RegistrationForm: React.FC = () => {
               <TextField
                 {...field}
                 label="Contact Number"
+                placeholder="e.g., +66812345678"
                 variant="outlined"
                 fullWidth
                 error={!!errors.contactNumber}
@@ -264,6 +266,7 @@ const RegistrationForm: React.FC = () => {
               <TextField
                 {...field}
                 label="Email Address"
+                placeholder="your.email@example.com"
                 variant="outlined"
                 fullWidth
                 error={!!errors.email}
@@ -301,6 +304,7 @@ const RegistrationForm: React.FC = () => {
               <TextField
                 {...field}
                 label="Present Company Name"
+                placeholder="Your current workplace"
                 variant="outlined"
                 fullWidth
                 error={!!errors.companyName}
@@ -338,6 +342,7 @@ const RegistrationForm: React.FC = () => {
               <TextField
                 {...field}
                 label="Current Position"
+                placeholder="e.g., Marketing Manager"
                 variant="outlined"
                 fullWidth
                 error={!!errors.currentPosition}
@@ -375,6 +380,7 @@ const RegistrationForm: React.FC = () => {
               <TextField
                 {...field}
                 label="Batch"
+                placeholder="e.g., MBA-23 or BBA-24"
                 variant="outlined"
                 fullWidth
                 error={!!errors.batch}
@@ -418,6 +424,7 @@ const RegistrationForm: React.FC = () => {
               <TextField
                 {...field}
                 label="Student ID"
+                placeholder="8-digit student ID"
                 variant="outlined"
                 fullWidth
                 error={!!errors.studentId}
@@ -455,6 +462,7 @@ const RegistrationForm: React.FC = () => {
               <TextField
                 {...field}
                 label="Address"
+                placeholder="Enter your current address"
                 variant="outlined"
                 fullWidth
                 multiline

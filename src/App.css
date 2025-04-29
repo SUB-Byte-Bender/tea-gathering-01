@@ -9,11 +9,6 @@ html {
     auto;
 }
 
-body::selection {
-  background: #fdd935;
-  color: #000;
-}
-
 /* Interactive elements cursor */
 a,
 button,

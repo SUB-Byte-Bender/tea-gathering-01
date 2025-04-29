@@ -378,6 +378,7 @@ const ConfirmationPage: React.FC = () => {
                 fontWeight: 700,
                 fontSize: isMobile ? "1.8rem" : "2.5rem",
                 textShadow: "0 2px 8px rgba(0,0,0,0.3)",
+                color: "white",
               }}
             >
               Registration Confirmed!
@@ -391,6 +392,7 @@ const ConfirmationPage: React.FC = () => {
                 mx: "auto",
                 px: 2,
                 fontSize: isMobile ? "1rem" : "1.25rem",
+                color: "white",
               }}
             >
               Thank you for registering for the Tea Gathering event
@@ -430,6 +432,7 @@ const ConfirmationPage: React.FC = () => {
                     sx={{
                       fontWeight: "bold",
                       fontSize: isMobile ? "1.8rem" : "2.2rem",
+                      color: "white",
                     }}
                   >
                     Tea Gathering
@@ -466,7 +469,7 @@ const ConfirmationPage: React.FC = () => {
                   </Box>
                 </TicketHeader>
 
-                <Grid container spacing={isMedium ? 3 : 4}>
+                <Grid container spacing={isMedium ? 3 : 4} alignItems="center">
                   <Grid component="div" item xs={12} md={4}>
                     <QRCodeContainer>
                       <QRCode
