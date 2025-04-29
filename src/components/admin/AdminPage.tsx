@@ -36,51 +36,18 @@ import { getAttendees, exportToExcel } from "../../utils/dataUtils";
 import { colors } from "../../styles/theme";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(4),
-  borderRadius: 16,
-  boxShadow: "0 8px 30px rgba(13, 12, 35, 0.12)",
-  background: "white",
-  marginTop: theme.spacing(4),
+  padding: theme.spacing(6, 7), // Further increased padding
+  borderRadius: 28, // More rounded corners
+  boxShadow: "0 20px 60px rgba(13, 12, 35, 0.15)",
+  background: "linear-gradient(145deg, white, #f5f9ff)",
+  marginTop: theme.spacing(7), // Increased margin
+  marginBottom: theme.spacing(7), // Increased margin
   overflow: "hidden",
   position: "relative",
-  "&::after": {
-    content: '""',
-    position: "absolute",
-    width: "200px",
-    height: "200px",
-    top: "-100px",
-    right: "-100px",
-    borderRadius: "50%",
-    background: `radial-gradient(circle, ${colors.light} 0%, transparent 70%)`,
-    opacity: 0.5,
-    zIndex: 0,
-  },
-  [theme.breakpoints.down("sm")]: {
-    padding: theme.spacing(3),
-  },
-}));
-
-const AdminHeading = styled(Box)(({ theme }) => ({
-  backgroundColor: colors.normal,
-  color: "white",
-  padding: theme.spacing(4, 5),
-  borderRadius: "12px 12px 0 0",
-  marginTop: theme.spacing(4),
-  marginBottom: -1,
-  backgroundImage: `linear-gradient(135deg, ${colors.normal} 0%, ${colors.normalHover} 100%)`,
-  position: "relative",
-  overflow: "hidden",
-  boxShadow: "0 6px 20px rgba(13, 12, 35, 0.2)",
-  "&::before": {
-    content: '""',
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: "url('/assets/pattern.png') repeat",
-    opacity: 0.1,
-    zIndex: 0,
+  transition: "all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+  "&:hover": {
+    boxShadow: "0 25px 65px rgba(13, 12, 35, 0.18)",
+    transform: "translateY(-8px)",
   },
   "&::after": {
     content: '""',
@@ -90,14 +57,74 @@ const AdminHeading = styled(Box)(({ theme }) => ({
     top: "-150px",
     right: "-150px",
     borderRadius: "50%",
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    background: `radial-gradient(circle, ${colors.light} 0%, transparent 70%)`,
+    opacity: 0.7,
+    zIndex: 0,
+  },
+  "&::before": {
+    content: '""',
+    position: "absolute",
+    width: "220px",
+    height: "220px",
+    bottom: "-110px",
+    left: "-110px",
+    borderRadius: "50%",
+    background: `radial-gradient(circle, ${colors.light} 0%, transparent 70%)`,
+    opacity: 0.6,
+    zIndex: 0,
+  },
+  [theme.breakpoints.down("sm")]: {
+    padding: theme.spacing(4.5),
+    marginTop: theme.spacing(5),
+    marginBottom: theme.spacing(5),
+    borderRadius: 24,
+  },
+}));
+
+const AdminHeading = styled(Box)(({ theme }) => ({
+  backgroundColor: colors.normal,
+  color: "white",
+  padding: theme.spacing(6, 7), // Increased padding for more space
+  borderRadius: "0 0 30px 30px", // Curved bottom corners
+  marginTop: 0,
+  marginBottom: 0,
+  backgroundImage: `linear-gradient(135deg, ${colors.normal} 0%, ${colors.normalHover} 100%)`,
+  position: "relative",
+  overflow: "hidden",
+  boxShadow: "0 8px 25px rgba(13, 12, 35, 0.25)",
+  "&::before": {
+    content: '""',
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: "url('/assets/pattern.png') repeat",
+    opacity: 0.15,
+    zIndex: 0,
+    animation: "pulse 15s infinite alternate",
+    "@keyframes pulse": {
+      "0%": { opacity: 0.1 },
+      "100%": { opacity: 0.2 },
+    },
+  },
+  "&::after": {
+    content: '""',
+    position: "absolute",
+    width: "350px",
+    height: "350px",
+    top: "-175px",
+    right: "-175px",
+    borderRadius: "50%",
+    backgroundColor: "rgba(255, 255, 255, 0.15)",
   },
   "& > *": {
     position: "relative",
     zIndex: 1,
   },
   [theme.breakpoints.down("sm")]: {
-    padding: theme.spacing(3, 2),
+    padding: theme.spacing(5, 3.5),
+    borderRadius: "0 0 25px 25px",
   },
 }));
 
@@ -126,32 +153,51 @@ const SearchBox = styled(Box)(({ theme }) => ({
 }));
 
 const StatsCard = styled(Box)(({ theme }) => ({
-  backgroundColor: colors.light,
-  borderRadius: 12,
-  padding: theme.spacing(2),
+  backgroundColor: "#ffffff",
+  borderRadius: 16,
+  padding: theme.spacing(3),
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
-  minHeight: 100,
+  minHeight: 120,
   position: "relative",
   overflow: "hidden",
-  transition: "all 0.3s ease",
-  boxShadow: "0 4px 12px rgba(13, 12, 35, 0.08)",
+  transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+  boxShadow: "0 8px 16px rgba(13, 12, 35, 0.1)",
+  border: "1px solid rgba(220, 230, 240, 0.8)",
   "&:hover": {
-    transform: "translateY(-3px)",
-    boxShadow: "0 8px 16px rgba(13, 12, 35, 0.12)",
+    transform: "translateY(-5px)",
+    boxShadow: "0 15px 25px rgba(13, 12, 35, 0.15)",
+    borderColor: `${colors.light}`,
   },
   "&::after": {
     content: '""',
     position: "absolute",
     bottom: 0,
     right: 0,
-    width: "80px",
-    height: "80px",
+    width: "100px",
+    height: "100px",
     borderRadius: "50% 0 0 0",
-    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    backgroundColor: "rgba(240, 245, 255, 0.7)",
     zIndex: 0,
+  },
+  "& .MuiTypography-h4": {
+    fontWeight: 700,
+    marginBottom: theme.spacing(1),
+    transition: "transform 0.3s ease",
+    color: colors.dark,
+  },
+  "& .MuiTypography-body1": {
+    color: "rgba(0, 0, 0, 0.6)",
+    fontWeight: 500,
+  },
+  "&:hover .MuiTypography-h4": {
+    transform: "scale(1.05)",
+  },
+  [theme.breakpoints.down("sm")]: {
+    minHeight: 100,
+    padding: theme.spacing(2),
   },
 }));
 
@@ -338,6 +384,7 @@ const AdminPage: React.FC = () => {
           sx={{
             fontWeight: 700,
             fontSize: isMobile ? "1.8rem" : "2.5rem",
+            color: "white",
           }}
         >
           Admin Dashboard
