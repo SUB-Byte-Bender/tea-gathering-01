@@ -53,7 +53,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ buttonStyles = {} }
   const {
     control,
     handleSubmit,
-    formState: { errors, isValid, isDirty, dirtyFields },
+    formState: { errors, isDirty, dirtyFields },
     setValue,
     watch,
   } = useForm<RegistrationFormData>({
