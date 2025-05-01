@@ -31,8 +31,6 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import LocalCafeIcon from "@mui/icons-material/LocalCafe";
-import EmailIcon from "@mui/icons-material/Email";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LanguageIcon from '@mui/icons-material/Language';
 import FacebookIcon from "@mui/icons-material/Facebook";
