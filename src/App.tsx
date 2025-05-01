@@ -51,7 +51,6 @@ const AppContent = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
   const navbarRef = useRef<HTMLDivElement>(null);
@@ -59,8 +58,6 @@ const AppContent = () => {
   // Handle scroll effect for AppBar
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-
       // Check if navbar is scrolled out of view
       if (navbarRef.current) {
         const navbarBottom = navbarRef.current.getBoundingClientRect().bottom;

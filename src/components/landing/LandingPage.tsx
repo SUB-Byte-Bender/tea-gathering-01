@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Container,
   Box,
@@ -9,19 +9,15 @@ import {
   useMediaQuery,
   useTheme,
   Divider,
-  Fab,
-  Zoom,
 } from "@mui/material";
 import { colors } from "../../styles/theme";
 import RegistrationForm from "../registration/RegistrationForm";
 import EventIcon from "@mui/icons-material/Event";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import InfoIcon from "@mui/icons-material/Info";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 // Styled components for the landing page with improved animations and styling
 const HeroSection = styled(Box)(({ theme }) => ({
-  // Hero Section Of Landing Page
   backgroundColor: colors.normal,
   color: "white",
   padding: theme.spacing(14, 0, 12),
@@ -141,21 +137,20 @@ const TeaCupShape = styled(Box)(({ theme }) => ({
 }));
 
 const EventDetails = styled(Paper)(({ theme }) => ({
-  // Event Details Section
-  padding: theme.spacing(2.5, 4, 4, 4), //  2.5 for top, 3 for right, 20 for bottom, 4 for left
+  padding: theme.spacing(2.5, 4, 4, 4),
   marginTop: theme.spacing(0),
   borderRadius: 16,
   boxShadow: "0 8px 30px rgba(13, 12, 35, 0.1)",
   zIndex: 2,
-  position: "sticky", // Make it sticky
-  top: theme.spacing(3), // Top position when sticky
+  position: "sticky",
+  top: theme.spacing(3),
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   height: "auto",
-  maxHeight: `calc(100vh - ${theme.spacing(6)})`, // Ensure it fits in viewport
-  overflowY: "auto", // Allow scrolling if content is too tall
-  transition: "all 0.3s ease-in-out, transform 0.3s ease-in-out", // Smooth transitions
+  maxHeight: `calc(100vh - ${theme.spacing(6)})`,
+  overflowY: "auto",
+  transition: "all 0.3s ease-in-out, transform 0.3s ease-in-out",
   "&:hover": {
     transform: "translateY(-5px)",
     boxShadow: "0 12px 40px rgba(13, 12, 35, 0.15)",
@@ -163,27 +158,13 @@ const EventDetails = styled(Paper)(({ theme }) => ({
   [theme.breakpoints.down("sm")]: {
     marginTop: theme.spacing(0),
     padding: theme.spacing(3),
-    position: "relative", // Disable sticky on mobile
+    position: "relative",
     top: 0,
   },
 }));
 
-const DetailItem = styled(Box)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  marginBottom: theme.spacing(2),
-  "& svg": {
-    marginRight: theme.spacing(1.5),
-    color: colors.normal,
-    fontSize: "1.8rem",
-  },
-}));
-
 const FormSection = styled(Paper)(({ theme }) => ({
-  // Registration Form Section
-  // padding: theme.spacing(4),
-  padding: theme.spacing(2.5, 4, 4, 4), //  2.5 for top, 3 for right, 2 for bottom, 1 for left
-
+  padding: theme.spacing(2.5, 4, 4, 4),
   marginTop: theme.spacing(0),
   borderRadius: 16,
   boxShadow: "0 8px 30px rgba(13, 12, 35, 0.1)",
@@ -211,26 +192,6 @@ const FormSection = styled(Paper)(({ theme }) => ({
   },
 }));
 
-const ScrollToTopButton = styled(Fab)(({ theme }) => ({
-  position: "fixed",
-  bottom: theme.spacing(4),
-  right: theme.spacing(4),
-  zIndex: 1000,
-  backgroundColor: colors.normal,
-  color: "white",
-  boxShadow: "0 4px 14px rgba(37, 34, 101, 0.25)",
-  transition: "all 0.3s ease",
-  "&:hover": {
-    backgroundColor: colors.normalHover,
-    transform: "translateY(-5px)",
-    boxShadow: "0 6px 20px rgba(37, 34, 101, 0.35)",
-  },
-  [theme.breakpoints.down("sm")]: {
-    bottom: theme.spacing(3),
-    right: theme.spacing(3),
-  },
-}));
-
 interface LandingPageProps {
   formRef?: React.RefObject<HTMLDivElement>;
 }
@@ -241,10 +202,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const heroSection = document.querySelector(".hero-section");
-      if (heroSection) {
-        const heroHeight = heroSection.getBoundingClientRect().height;
-      }
+      document.querySelector(".hero-section");
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -334,7 +292,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
         </HeroContentWrapper>
       </HeroSection>
 
-      <Container maxWidth="lg">  {/* Bottom Border Removed */}
+      <Container maxWidth="lg">
         <Box sx={{ my: 5 }}>
           <Grid container spacing={isMobile ? 3 : 4} sx={{ position: "relative" }}>
             <Grid component="div" item xs={12} md={5} sx={{ position: "static" }}>
@@ -348,7 +306,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
                   sx={{
                     fontWeight: 600,
                     fontSize: isMobile ? "1.8rem" : "2.2rem",
-                    // borderBottom: `2px solid ${colors.light}`,
                     borderBottom: "none",
                     paddingBottom: 1,
                     marginBottom: 2.4,
@@ -358,7 +315,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
                   Event Details
                 </Typography>
 
-                {/* Date Card */}
                 <Box
                   sx={{
                     bgcolor: "#f0f9ff",
@@ -394,7 +350,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
                   </Typography>
                 </Box>
 
-                {/* Venue Card */}
                 <Box
                   sx={{
                     bgcolor: "#f0f9ff",
@@ -433,7 +388,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
                 <Box
                   mt={4}
                   p={3}
-                  // bgcolor={`${colors.light}80`}
                   bgcolor={`#e0f2fe`}
                   borderRadius={3}
                   width="100%"
@@ -474,8 +428,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
 
             <Grid component="div" item xs={12} md={7}>
               <Box ref={formRef} id="registration-form">
-                {" "}
-                {/* Registration Form Section */}
                 <FormSection elevation={3}>
                   <Typography
                     variant="h3"
@@ -485,7 +437,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
                     sx={{
                       fontWeight: 600,
                       fontSize: isMobile ? "1.8rem" : "2.2rem",
-                      borderBottom: "none", // Remove bottom border
+                      borderBottom: "none",
                       paddingBottom: 1,
                       marginBottom: 2,
                     }}
