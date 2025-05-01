@@ -30,7 +30,11 @@ import HomeIcon from "@mui/icons-material/Home";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
-const RegistrationForm: React.FC = () => {
+interface RegistrationFormProps {
+  buttonStyles?: React.CSSProperties | any;
+}
+
+const RegistrationForm: React.FC<RegistrationFormProps> = ({ buttonStyles = {} }) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -103,11 +107,11 @@ const RegistrationForm: React.FC = () => {
         return;
       }
 
-      // Check file size (max 2MB)
-      if (file.size > 2 * 1024 * 1024) {
-        setError("Image size should be less than 2MB");
-        return;
-      }
+      // Check file size (max 2MB)   // Validation of Picture Size Limit
+      // if (file.size > 2 * 1024 * 1024) {
+      //   setError("Image size should be less than 2MB");
+      //   return;
+      // }
 
       setError(null);
       setValue("profilePicture", file);
@@ -175,7 +179,12 @@ const RegistrationForm: React.FC = () => {
       </Fade>
 
       <Grid container spacing={isMobile ? 2 : 3}>
-        <Grid component="div" item xs={12}>
+        <Grid 
+          component="div" 
+          item 
+          xs={12}
+          sx={{ pt: '5px !important' }} // Add custom padding-top just for this field
+        >
           <Controller
             name="fullName"
             control={control}
@@ -623,7 +632,7 @@ const RegistrationForm: React.FC = () => {
           </Box>
         </Grid>
 
-        <Grid component="div" item xs={12} mt={isMobile ? 2 : 3}>
+        <Grid component="div" item xs={12} mt={isMobile ? 2 : 3} sx={buttonStyles}>
           <Button
             type="submit"
             variant="contained"

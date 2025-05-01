@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Container,
   Box,
@@ -9,18 +9,22 @@ import {
   useMediaQuery,
   useTheme,
   Divider,
+  Fab,
+  Zoom,
 } from "@mui/material";
 import { colors } from "../../styles/theme";
 import RegistrationForm from "../registration/RegistrationForm";
 import EventIcon from "@mui/icons-material/Event";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import InfoIcon from "@mui/icons-material/Info";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 // Styled components for the landing page with improved animations and styling
 const HeroSection = styled(Box)(({ theme }) => ({
+  // Hero Section Of Landing Page
   backgroundColor: colors.normal,
   color: "white",
-  padding: theme.spacing(14, 0, 12), // Increased vertical padding for a more spacious hero
+  padding: theme.spacing(14, 0, 12),
   borderRadius: "0",
   textAlign: "center",
   position: "relative",
@@ -35,43 +39,8 @@ const HeroSection = styled(Box)(({ theme }) => ({
     background: `linear-gradient(135deg, ${colors.normal} 0%, ${colors.normalHover} 100%)`,
     zIndex: 0,
   },
-  // Add decorative elements
-  "&::after": {
-    content: '""',
-    position: "absolute",
-    width: "100%",
-    height: "40px",
-    bottom: 0,
-    left: 0,
-    background: `
-      radial-gradient(circle at 20px 0, white 20px, transparent 0),
-      radial-gradient(circle at 60px 0, white 20px, transparent 0),
-      radial-gradient(circle at 100px 0, white 20px, transparent 0),
-      radial-gradient(circle at 140px 0, white 20px, transparent 0),
-      radial-gradient(circle at 180px 0, white 20px, transparent 0),
-      radial-gradient(circle at 220px 0, white 20px, transparent 0),
-      radial-gradient(circle at 260px 0, white 20px, transparent 0),
-      radial-gradient(circle at 300px 0, white 20px, transparent 0),
-      radial-gradient(circle at 340px 0, white 20px, transparent 0),
-      radial-gradient(circle at 380px 0, white 20px, transparent 0),
-      radial-gradient(circle at 420px 0, white 20px, transparent 0),
-      radial-gradient(circle at 460px 0, white 20px, transparent 0),
-      radial-gradient(circle at 500px 0, white 20px, transparent 0)
-    `,
-    backgroundSize: "540px 40px",
-    backgroundRepeat: "repeat-x",
-    zIndex: 1,
-  },
-  "& > *": {
-    position: "relative",
-    zIndex: 2,
-  },
-  [theme.breakpoints.down("sm")]: {
-    padding: theme.spacing(10, 0, 10),
-  },
 }));
 
-// New styled components for improved hero section
 const HeroContentWrapper = styled(Box)(({ theme }) => ({
   position: "relative",
   maxWidth: "900px",
@@ -108,7 +77,6 @@ const CircleDecoration = styled(Box)(({ theme }) => ({
   zIndex: 0,
 }));
 
-// Enhanced animated title
 const AnimatedTitle = styled(Typography)(({ theme }) => ({
   animation: "fadeInDown 1.2s ease-out",
   "@keyframes fadeInDown": {
@@ -123,7 +91,6 @@ const AnimatedTitle = styled(Typography)(({ theme }) => ({
   },
 }));
 
-// Animated subtitle with a different animation timing
 const AnimatedSubtitle = styled(Typography)(({ theme }) => ({
   animation: "fadeInUp 1.2s ease-out 0.3s forwards",
   opacity: 0,
@@ -139,7 +106,6 @@ const AnimatedSubtitle = styled(Typography)(({ theme }) => ({
   },
 }));
 
-// Decorative shapes
 const TeaCupShape = styled(Box)(({ theme }) => ({
   position: "absolute",
   width: "180px",
@@ -175,25 +141,30 @@ const TeaCupShape = styled(Box)(({ theme }) => ({
 }));
 
 const EventDetails = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(4),
-  marginTop: theme.spacing(0), // Changed from -5 to 0 to align with registration form
+  // Event Details Section
+  padding: theme.spacing(2.5, 4, 4, 4), //  2.5 for top, 3 for right, 20 for bottom, 4 for left
+  marginTop: theme.spacing(0),
   borderRadius: 16,
   boxShadow: "0 8px 30px rgba(13, 12, 35, 0.1)",
   zIndex: 2,
-  position: "relative",
+  position: "sticky", // Make it sticky
+  top: theme.spacing(3), // Top position when sticky
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  height: "100%", // Added to ensure equal height with registration form
-  background: `linear-gradient(to bottom, ${colors.light}, #ffffff)`,
-  transition: "transform 0.3s ease-in-out",
+  height: "auto",
+  maxHeight: `calc(100vh - ${theme.spacing(6)})`, // Ensure it fits in viewport
+  overflowY: "auto", // Allow scrolling if content is too tall
+  transition: "all 0.3s ease-in-out, transform 0.3s ease-in-out", // Smooth transitions
   "&:hover": {
     transform: "translateY(-5px)",
     boxShadow: "0 12px 40px rgba(13, 12, 35, 0.15)",
   },
   [theme.breakpoints.down("sm")]: {
-    marginTop: theme.spacing(0), // Changed from -3 to 0
+    marginTop: theme.spacing(0),
     padding: theme.spacing(3),
+    position: "relative", // Disable sticky on mobile
+    top: 0,
   },
 }));
 
@@ -209,13 +180,16 @@ const DetailItem = styled(Box)(({ theme }) => ({
 }));
 
 const FormSection = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(4),
-  marginTop: theme.spacing(0), // Changed from 4 to 0 to align with event details
+  // Registration Form Section
+  // padding: theme.spacing(4),
+  padding: theme.spacing(2.5, 4, 4, 4), //  2.5 for top, 3 for right, 2 for bottom, 1 for left
+
+  marginTop: theme.spacing(0),
   borderRadius: 16,
   boxShadow: "0 8px 30px rgba(13, 12, 35, 0.1)",
   background: "white",
   position: "relative",
-  height: "100%", // Added to ensure equal height with event details
+  height: "100%",
   overflow: "hidden",
   "&::after": {
     content: '""',
@@ -237,14 +211,50 @@ const FormSection = styled(Paper)(({ theme }) => ({
   },
 }));
 
-// Landing page component
-const LandingPage: React.FC = () => {
+const ScrollToTopButton = styled(Fab)(({ theme }) => ({
+  position: "fixed",
+  bottom: theme.spacing(4),
+  right: theme.spacing(4),
+  zIndex: 1000,
+  backgroundColor: colors.normal,
+  color: "white",
+  boxShadow: "0 4px 14px rgba(37, 34, 101, 0.25)",
+  transition: "all 0.3s ease",
+  "&:hover": {
+    backgroundColor: colors.normalHover,
+    transform: "translateY(-5px)",
+    boxShadow: "0 6px 20px rgba(37, 34, 101, 0.35)",
+  },
+  [theme.breakpoints.down("sm")]: {
+    bottom: theme.spacing(3),
+    right: theme.spacing(3),
+  },
+}));
+
+interface LandingPageProps {
+  formRef?: React.RefObject<HTMLDivElement>;
+}
+
+const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroSection = document.querySelector(".hero-section");
+      if (heroSection) {
+        const heroHeight = heroSection.getBoundingClientRect().height;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <Box>
-      <HeroSection>
+      <HeroSection className="hero-section">
         <CircleDecoration className="circle1" />
         <CircleDecoration className="circle2" />
         <CircleDecoration className="circle3" />
@@ -324,10 +334,10 @@ const LandingPage: React.FC = () => {
         </HeroContentWrapper>
       </HeroSection>
 
-      <Container maxWidth="lg">
+      <Container maxWidth="lg">  {/* Bottom Border Removed */}
         <Box sx={{ my: 5 }}>
-          <Grid container spacing={isMobile ? 3 : 4}>
-            <Grid component="div" item xs={12} md={5}>
+          <Grid container spacing={isMobile ? 3 : 4} sx={{ position: "relative" }}>
+            <Grid component="div" item xs={12} md={5} sx={{ position: "static" }}>
               <EventDetails elevation={3}>
                 <Typography
                   variant="h3"
@@ -338,34 +348,93 @@ const LandingPage: React.FC = () => {
                   sx={{
                     fontWeight: 600,
                     fontSize: isMobile ? "1.8rem" : "2.2rem",
-                    borderBottom: `2px solid ${colors.light}`,
+                    // borderBottom: `2px solid ${colors.light}`,
+                    borderBottom: "none",
                     paddingBottom: 1,
-                    marginBottom: 3,
+                    marginBottom: 2.4,
                     width: "100%",
                   }}
                 >
                   Event Details
                 </Typography>
 
-                <DetailItem>
-                  <EventIcon fontSize="large" />
-                  <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
-                    <strong>Date:</strong> 19th July, 2025 | 5:00 PM
+                {/* Date Card */}
+                <Box
+                  sx={{
+                    bgcolor: "#f0f9ff",
+                    borderRadius: 1,
+                    border: `1px solid #cbe4fe`,
+                    position: "relative",
+                    p: 2,
+                    mb: 2,
+                    width: "100%",
+                    textAlign: "center",
+                  }}
+                >
+                  <EventIcon
+                    sx={{ color: colors.normal, fontSize: "1.8rem", mb: 1 }}
+                  />
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontWeight: 400,
+                      fontSize: "0.95rem",
+                    }}
+                  >
+                    <strong>Date & Time</strong>
                   </Typography>
-                </DetailItem>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontWeight: 400,
+                      fontSize: "0.95rem",
+                    }}
+                  >
+                    19th July, 2025 | 5:00 PM
+                  </Typography>
+                </Box>
 
-                <DetailItem>
-                  <LocationOnIcon fontSize="large" />
-                  <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
-                    <strong>Venue:</strong> Auditorium, Stamford University
-                    Bangladesh
+                {/* Venue Card */}
+                <Box
+                  sx={{
+                    bgcolor: "#f0f9ff",
+                    borderRadius: 1,
+                    border: `1px solid #cbe4fe`,
+                    position: "relative",
+                    p: 2,
+                    mb: 2,
+                    width: "100%",
+                    textAlign: "center",
+                  }}
+                >
+                  <LocationOnIcon
+                    sx={{ color: colors.normal, fontSize: "1.8rem", mb: 1 }}
+                  />
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontWeight: 400,
+                      fontSize: "0.95rem",
+                    }}
+                  >
+                    <strong>Venue</strong>
                   </Typography>
-                </DetailItem>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontWeight: 400,
+                      fontSize: "0.95rem",
+                    }}
+                  >
+                    Auditorium, Stamford University Bangladesh
+                  </Typography>
+                </Box>
 
                 <Box
                   mt={4}
                   p={3}
-                  bgcolor={`${colors.light}80`}
+                  // bgcolor={`${colors.light}80`}
+                  bgcolor={`#e0f2fe`}
                   borderRadius={3}
                   width="100%"
                   sx={{
@@ -404,24 +473,36 @@ const LandingPage: React.FC = () => {
             </Grid>
 
             <Grid component="div" item xs={12} md={7}>
-              <FormSection elevation={3}>
-                <Typography
-                  variant="h3"
-                  component="h2"
-                  gutterBottom
-                  color="primary"
-                  sx={{
-                    fontWeight: 600,
-                    fontSize: isMobile ? "1.8rem" : "2.2rem",
-                    borderBottom: `2px solid ${colors.light}`,
-                    paddingBottom: 1,
-                    marginBottom: 2,
-                  }}
-                >
-                  Registration Form
-                </Typography>
-                <RegistrationForm />
-              </FormSection>
+              <Box ref={formRef} id="registration-form">
+                {" "}
+                {/* Registration Form Section */}
+                <FormSection elevation={3}>
+                  <Typography
+                    variant="h3"
+                    component="h2"
+                    gutterBottom
+                    color="primary"
+                    sx={{
+                      fontWeight: 600,
+                      fontSize: isMobile ? "1.8rem" : "2.2rem",
+                      borderBottom: "none", // Remove bottom border
+                      paddingBottom: 1,
+                      marginBottom: 2,
+                    }}
+                  >
+                    Registration Form
+                  </Typography>
+                  <Box
+                    sx={{
+                      "& .MuiGrid-root:last-child": {
+                        marginTop: "-2px !important",
+                      },
+                    }}
+                  >
+                    <RegistrationForm />
+                  </Box>
+                </FormSection>
+              </Box>
             </Grid>
           </Grid>
         </Box>

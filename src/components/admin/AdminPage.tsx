@@ -40,15 +40,11 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   borderRadius: 28, // More rounded corners
   boxShadow: "0 20px 60px rgba(13, 12, 35, 0.15)",
   background: "linear-gradient(145deg, white, #f5f9ff)",
-  marginTop: theme.spacing(7), // Increased margin
+  marginTop: theme.spacing(3), // Reduced from 7 to 3
   marginBottom: theme.spacing(7), // Increased margin
   overflow: "hidden",
   position: "relative",
   transition: "all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-  "&:hover": {
-    boxShadow: "0 25px 65px rgba(13, 12, 35, 0.18)",
-    transform: "translateY(-8px)",
-  },
   "&::after": {
     content: '""',
     position: "absolute",
@@ -84,14 +80,14 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 const AdminHeading = styled(Box)(({ theme }) => ({
   backgroundColor: colors.normal,
   color: "white",
-  padding: theme.spacing(6, 7), // Increased padding for more space
-  borderRadius: "0 0 30px 30px", // Curved bottom corners
+  padding: theme.spacing(12, 7, 6, 7), // Reduced bottom padding from 10 to 6
+  borderRadius: "0 0 40px 40px", // More pronounced curved bottom corners
   marginTop: 0,
   marginBottom: 0,
   backgroundImage: `linear-gradient(135deg, ${colors.normal} 0%, ${colors.normalHover} 100%)`,
   position: "relative",
   overflow: "hidden",
-  boxShadow: "0 8px 25px rgba(13, 12, 35, 0.25)",
+  boxShadow: "0 15px 35px rgba(13, 12, 35, 0.35)",
   "&::before": {
     content: '""',
     position: "absolute",
@@ -111,10 +107,10 @@ const AdminHeading = styled(Box)(({ theme }) => ({
   "&::after": {
     content: '""',
     position: "absolute",
-    width: "350px",
-    height: "350px",
-    top: "-175px",
-    right: "-175px",
+    width: "450px",
+    height: "450px",
+    top: "-225px",
+    right: "-225px",
     borderRadius: "50%",
     backgroundColor: "rgba(255, 255, 255, 0.15)",
   },
@@ -123,8 +119,8 @@ const AdminHeading = styled(Box)(({ theme }) => ({
     zIndex: 1,
   },
   [theme.breakpoints.down("sm")]: {
-    padding: theme.spacing(5, 3.5),
-    borderRadius: "0 0 25px 25px",
+    padding: theme.spacing(9, 3.5, 7, 3.5), // Increased padding for mobile view
+    borderRadius: "0 0 30px 30px",
   },
 }));
 
@@ -180,17 +176,24 @@ const StatsCard = styled(Box)(({ theme }) => ({
     height: "100px",
     borderRadius: "50% 0 0 0",
     backgroundColor: "rgba(240, 245, 255, 0.7)",
-    zIndex: 0,
+    zIndex: 0, // Keeping this at 0 or lower
   },
+  "& .MuiTypography-h4, & .MuiTypography-h3, & .MuiTypography-body1, & .MuiTypography-body2":
+    {
+      position: "relative", // Make text positioned elements
+      zIndex: 1, // Ensure text stays above the decorative elements
+    },
   "& .MuiTypography-h4": {
     fontWeight: 700,
     marginBottom: theme.spacing(1),
     transition: "transform 0.3s ease",
     color: colors.dark,
   },
-  "& .MuiTypography-body1": {
+  "& .MuiTypography-body1, & .MuiTypography-body2": {
     color: "rgba(0, 0, 0, 0.6)",
     fontWeight: 500,
+    position: "relative", // Explicit position
+    zIndex: 1, // Ensure it's above decorative elements
   },
   "&:hover .MuiTypography-h4": {
     transform: "scale(1.05)",
@@ -410,7 +413,7 @@ const AdminPage: React.FC = () => {
                   {attendees.length}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Total Registrations
+                  Registrations
                 </Typography>
               </StatsCard>
             </Grid>
@@ -420,7 +423,7 @@ const AdminPage: React.FC = () => {
                   {new Set(attendees.map((a) => a.batch)).size}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Different Batches
+                  Batches
                 </Typography>
               </StatsCard>
             </Grid>
@@ -430,7 +433,7 @@ const AdminPage: React.FC = () => {
                   {new Set(attendees.map((a) => a.companyName)).size}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Different Companies
+                  Companies
                 </Typography>
               </StatsCard>
             </Grid>
