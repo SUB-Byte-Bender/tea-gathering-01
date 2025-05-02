@@ -50,8 +50,8 @@ const AppContent = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const formRef = useRef<HTMLDivElement>(null);
-  const navbarRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef(null);
+  const navbarRef = useRef(null);
 
   // Handle scroll effect for AppBar
   useEffect(() => {
@@ -110,7 +110,6 @@ const AppContent = () => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      {/* Header with navigation - Updated to be transparent and positioned inside hero */}
       <AppBar
         position="absolute"
         ref={navbarRef}
@@ -133,7 +132,6 @@ const AppContent = () => {
               justifyContent: "space-between",
             }}
           >
-            {/* Logo area - Updated to show SVG logos */}
             <Box
               sx={{
                 display: "flex",
@@ -187,7 +185,6 @@ const AppContent = () => {
               </Box>
             </Box>
 
-            {/* Desktop navigation */}
             {!isMobile && (
               <Box
                 sx={{
@@ -224,7 +221,6 @@ const AppContent = () => {
                   </Button>
                 ))}
 
-                {/* Call to action button */}
                 <Button
                   variant="contained"
                   onClick={scrollToForm}
@@ -250,7 +246,6 @@ const AppContent = () => {
               </Box>
             )}
 
-            {/* Mobile menu button */}
             {isMobile && (
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Button
@@ -298,11 +293,10 @@ const AppContent = () => {
         </Container>
       </AppBar>
 
-      {/* Mobile navigation drawer - Updated design */}
       <Box component="nav">
         <Drawer
           variant="temporary"
-          anchor="right" // Changed to slide from right
+          anchor="right"
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
@@ -318,7 +312,6 @@ const AppContent = () => {
             },
           }}
         >
-          {/* Updated mobile drawer content */}
           <Box
             onClick={handleDrawerToggle}
             sx={{ textAlign: "center", height: "100%" }}
@@ -417,7 +410,6 @@ const AppContent = () => {
         </Drawer>
       </Box>
 
-      {/* Main content area */}
       <Box component="main" sx={{ flexGrow: 1 }}>
         <Fade in={true} timeout={800}>
           <Box>
@@ -431,7 +423,6 @@ const AppContent = () => {
         </Fade>
       </Box>
 
-      {/* Scroll to Top Button */}
       <Zoom in={showScrollTop}>
         <Fab
           color="primary"
@@ -453,16 +444,15 @@ const AppContent = () => {
         </Fab>
       </Zoom>
 
-      {/* Enhanced Footer */}
       <Box
         component="footer"
         sx={{
-          py: 6, // Increased vertical padding
+          py: 6,
           mt: "auto",
-          backgroundColor: "#f8f8fc", // Slightly colored background that works with violet theme
+          backgroundColor: "#f8f8fc",
           borderTop: "1px solid",
           borderColor: `${colors.light}`,
-          boxShadow: "0 -4px 20px rgba(13, 12, 35, 0.05)", // Subtle shadow for depth
+          boxShadow: "0 -4px 20px rgba(13, 12, 35, 0.05)",
         }}
       >
         <Container maxWidth="lg">
@@ -472,10 +462,9 @@ const AppContent = () => {
               flexDirection: { xs: "column", md: "row" },
               justifyContent: "space-between",
               alignItems: { xs: "center", md: "flex-start" },
-              gap: 4, // Added gap for better spacing
+              gap: 4,
             }}
           >
-            {/* Logo and Description */}
             <Box
               sx={{
                 display: "flex",
@@ -486,7 +475,6 @@ const AppContent = () => {
               }}
             >
               <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-                {/* Replaced icon with SVG logos in footer */}
                 <Box
                   sx={{
                     display: "flex",
@@ -501,7 +489,6 @@ const AppContent = () => {
                     sx={{
                       height: "50px",
                       width: "auto",
-                      // I want to change the svg color to #252265
                       filter: "invert(0.5) sepia(1) saturate(0) hue-rotate(180deg)",
                     }}
                   />
@@ -518,26 +505,18 @@ const AppContent = () => {
                     }}
                   />
                 </Box>
-                {/* <Typography
-                  variant="h6"
-                  color="primary"
-                  sx={{ fontWeight: 700, fontSize: "1.3rem" }}
-                >
-                  Tea Gathering
-                </Typography> */}
               </Box>
               <Typography
-                variant="body1" // Changed from body2 for better readability
+                variant="body1"
                 color="text.secondary"
                 align={isMobile ? "center" : "left"}
-                sx={{ maxWidth: "90%" }} // Added max-width for better text wrapping
+                sx={{ maxWidth: "90%" }}
               >
                 Join us for a delightful evening of networking and refreshments
                 at Stamford University Bangladesh's Alumni CSE Tea Gathering event.
               </Typography>
             </Box>
 
-            {/* Quick Links */}
             <Box
               sx={{
                 display: "flex",
@@ -549,7 +528,7 @@ const AppContent = () => {
               <Typography
                 variant="subtitle1"
                 color="primary"
-                sx={{ mb: 2.5, fontWeight: 700, fontSize: "1.1rem" }} // Enhanced heading
+                sx={{ mb: 2.5, fontWeight: 700, fontSize: "1.1rem" }}
               >
                 Quick Links
               </Typography>
@@ -557,8 +536,8 @@ const AppContent = () => {
               <Button
                 href="/"
                 sx={{
-                  color: colors.normal, // Changed to primary color for better visibility
-                  mb: 1.5, // Increased spacing between buttons
+                  color: colors.normal,
+                  mb: 1.5,
                   fontWeight: 500,
                   "&:hover": {
                     backgroundColor: `${colors.light}50`,
@@ -572,8 +551,8 @@ const AppContent = () => {
               <Button
                 href="/admin"
                 sx={{
-                  color: colors.normal, // Changed to primary color for better visibility
-                  mb: 1.5, // Increased spacing
+                  color: colors.normal,
+                  mb: 1.5,
                   fontWeight: 500,
                   "&:hover": {
                     backgroundColor: `${colors.light}50`,
@@ -585,24 +564,22 @@ const AppContent = () => {
               </Button>
             </Box>
 
-            {/* Contact Info */}
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: { xs: "center", md: "flex-start" },
-                minWidth: { xs: "auto", md: "200px" }, // Added min-width for better alignment
+                minWidth: { xs: "auto", md: "200px" },
               }}
             >
               <Typography
                 variant="subtitle1"
                 color="primary"
-                sx={{ mb: 2.5, fontWeight: 700, fontSize: "1.1rem" }} // Enhanced heading
+                sx={{ mb: 2.5, fontWeight: 700, fontSize: "1.1rem" }}
               >
                 Contact
               </Typography>
 
-              {/* Updated to make the URL clickable */}
               <Button
                 href="https://cse.stamforduniversity.edu.bd/"
                 target="_blank"
@@ -636,7 +613,7 @@ const AppContent = () => {
                   size="medium"
                   sx={{
                     color: colors.normal,
-                    backgroundColor: `${colors.light}60`, // Added background
+                    backgroundColor: `${colors.light}60`,
                     "&:hover": {
                       backgroundColor: colors.light,
                     },
@@ -648,7 +625,7 @@ const AppContent = () => {
                   size="medium"
                   sx={{
                     color: colors.normal,
-                    backgroundColor: `${colors.light}60`, // Added background
+                    backgroundColor: `${colors.light}60`,
                     "&:hover": {
                       backgroundColor: colors.light,
                     },
@@ -660,7 +637,7 @@ const AppContent = () => {
                   size="medium"
                   sx={{
                     color: colors.normal,
-                    backgroundColor: `${colors.light}60`, // Added background
+                    backgroundColor: `${colors.light}60`,
                     "&:hover": {
                       backgroundColor: colors.light,
                     },
@@ -672,7 +649,7 @@ const AppContent = () => {
                   size="medium"
                   sx={{
                     color: colors.normal,
-                    backgroundColor: `${colors.light}60`, // Added background
+                    backgroundColor: `${colors.light}60`,
                     "&:hover": {
                       backgroundColor: colors.light,
                     },
@@ -683,8 +660,7 @@ const AppContent = () => {
               </Box>
             </Box>
           </Box>
-          <Divider sx={{ my: 4, borderColor: `${colors.lightActive}` }} />{" "}
-          {/* Enhanced divider */}
+          <Divider sx={{ my: 4, borderColor: `${colors.lightActive}` }} />
           <Box sx={{ textAlign: "center" }}>
             <Typography variant="body2" color="text.secondary" fontWeight={500}>
               © {new Date().getFullYear()} CSE Tea Gathering | Stamford University
@@ -693,7 +669,7 @@ const AppContent = () => {
             <Typography
               variant="caption"
               color="text.secondary"
-              sx={{ mt: 1.5, display: "block", fontSize: "0.8rem" }} // Increased margin and font size
+              sx={{ mt: 1.5, display: "block", fontSize: "0.8rem" }}
             >
               Designed with 💜 by the Stamford University Dev Team
             </Typography>
@@ -704,6 +680,10 @@ const AppContent = () => {
   );
 };
 
+/**
+ * Main App component that provides theme and routing
+ * @returns {JSX.Element} The App component
+ */
 function App() {
   return (
     <ThemeProvider theme={theme}>

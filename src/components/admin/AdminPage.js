@@ -23,15 +23,12 @@ import {
 } from "@mui/material";
 import {
   DataGrid,
-  GridColDef,
   GridToolbar,
-  GridRenderCellParams,
 } from "@mui/x-data-grid";
 import DownloadIcon from "@mui/icons-material/Download";
 import SearchIcon from "@mui/icons-material/Search";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import PersonIcon from "@mui/icons-material/Person";
-import { Attendee, ColumnConfig } from "../../types";
 import { getAttendees, exportToExcel } from "../../utils/dataUtils";
 import { colors } from "../../styles/theme";
 
@@ -204,15 +201,19 @@ const StatsCard = styled(Box)(({ theme }) => ({
   },
 }));
 
-const AdminPage: React.FC = () => {
+/**
+ * Admin dashboard for the Tea Gathering event
+ * @returns {JSX.Element} AdminPage component
+ */
+const AdminPage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const [attendees, setAttendees] = useState<Attendee[]>([]);
-  const [filteredAttendees, setFilteredAttendees] = useState<Attendee[]>([]);
+  const [attendees, setAttendees] = useState([]);
+  const [filteredAttendees, setFilteredAttendees] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const [exportLoading, setExportLoading] = useState(false);
-  const [columns, setColumns] = useState<ColumnConfig[]>([
+  const [columns, setColumns] = useState([
     { field: "fullName", headerName: "Full Name", width: 180, selected: true },
     {
       field: "contactNumber",
@@ -247,7 +248,7 @@ const AdminPage: React.FC = () => {
       width: 180,
       selected: true,
       valueFormatter: (params) => {
-        const date = new Date(params.value as string);
+        const date = new Date(params.value);
         return date.toLocaleString();
       },
     },
@@ -256,7 +257,7 @@ const AdminPage: React.FC = () => {
       headerName: "Profile",
       width: 100,
       selected: true,
-      renderCell: (params: GridRenderCellParams) => {
+      renderCell: (params) => {
         const hasProfilePicture = !!params.value;
 
         return (
@@ -278,7 +279,7 @@ const AdminPage: React.FC = () => {
                 }}
               >
                 <img
-                  src={params.value as string}
+                  src={params.value}
                   alt="Profile"
                   style={{
                     width: "100%",
@@ -312,8 +313,11 @@ const AdminPage: React.FC = () => {
     setFilteredAttendees(loadedAttendees);
   }, []);
 
-  // Handle column visibility change
-  const handleColumnToggle = (field: string) => {
+  /**
+   * Handle column visibility toggle
+   * @param {string} field - Column field name
+   */
+  const handleColumnToggle = (field) => {
     setColumns(
       columns.map((column) =>
         column.field === field
@@ -323,8 +327,11 @@ const AdminPage: React.FC = () => {
     );
   };
 
-  // Get visible columns for DataGrid
-  const getVisibleColumns = (): GridColDef[] => {
+  /**
+   * Get visible columns for DataGrid
+   * @returns {Array} Array of column definitions
+   */
+  const getVisibleColumns = () => {
     return columns
       .filter((column) => column.selected)
       .map((column) => ({
@@ -337,8 +344,11 @@ const AdminPage: React.FC = () => {
       }));
   };
 
-  // Handle search
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+  /**
+   * Handle search input change
+   * @param {Event} event - Input change event
+   */
+  const handleSearch = (event) => {
     const term = event.target.value.toLowerCase();
     setSearchTerm(term);
 
@@ -359,7 +369,9 @@ const AdminPage: React.FC = () => {
     setFilteredAttendees(filtered);
   };
 
-  // Handle export to Excel
+  /**
+   * Handle export to Excel
+   */
   const handleExport = async () => {
     try {
       setExportLoading(true);

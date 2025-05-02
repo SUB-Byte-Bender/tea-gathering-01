@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import {
   Container,
   Box,
@@ -192,11 +192,7 @@ const FormSection = styled(Paper)(({ theme }) => ({
   },
 }));
 
-interface LandingPageProps {
-  formRef?: React.RefObject<HTMLDivElement>;
-}
-
-const LandingPage: React.FC<LandingPageProps> = ({ formRef }) => {
+const LandingPage = ({ formRef }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 

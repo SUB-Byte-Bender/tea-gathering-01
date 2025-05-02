@@ -1,22 +1,27 @@
-import { Attendee, RegistrationFormData } from "../types";
 import * as XLSX from "xlsx";
 import { v4 as uuidv4 } from "uuid";
 
 // Local Storage Key
 const ATTENDEES_STORAGE_KEY = "tea-gathering-attendees";
 
-// Save attendees to local storage
-export const saveAttendees = (attendees: Attendee[]): void => {
+/**
+ * Save attendees to local storage
+ * @param {Array} attendees - Array of attendee objects
+ */
+export const saveAttendees = (attendees) => {
   localStorage.setItem(ATTENDEES_STORAGE_KEY, JSON.stringify(attendees));
 };
 
-// Get attendees from local storage
-export const getAttendees = (): Attendee[] => {
+/**
+ * Get attendees from local storage
+ * @returns {Array} Array of attendee objects
+ */
+export const getAttendees = () => {
   const data = localStorage.getItem(ATTENDEES_STORAGE_KEY);
   if (!data) return [];
 
   try {
-    return JSON.parse(data).map((attendee: any) => ({
+    return JSON.parse(data).map((attendee) => ({
       ...attendee,
       registrationDate: new Date(attendee.registrationDate),
     }));
@@ -26,10 +31,12 @@ export const getAttendees = (): Attendee[] => {
   }
 };
 
-// Add a new attendee
-export const addAttendee = async (
-  formData: RegistrationFormData
-): Promise<Attendee> => {
+/**
+ * Add a new attendee
+ * @param {Object} formData - Registration form data
+ * @returns {Promise<Object>} The newly created attendee object
+ */
+export const addAttendee = async (formData) => {
   const attendees = getAttendees();
 
   // Convert the profile picture to base64 if available
@@ -38,7 +45,7 @@ export const addAttendee = async (
     profilePictureBase64 = await convertFileToBase64(formData.profilePicture);
   }
 
-  const newAttendee: Attendee = {
+  const newAttendee = {
     id: uuidv4(),
     ...formData,
     profilePicture: profilePictureBase64,
@@ -51,32 +58,40 @@ export const addAttendee = async (
   return newAttendee;
 };
 
-// Convert File to base64 string
-export const convertFileToBase64 = (file: File): Promise<string> => {
+/**
+ * Convert File to base64 string
+ * @param {File} file - File to convert
+ * @returns {Promise<string>} Base64 encoded file content
+ */
+export const convertFileToBase64 = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
+    reader.onload = () => resolve(reader.result);
     reader.onerror = (error) => reject(error);
   });
 };
 
-// Export attendees data to Excel
+/**
+ * Export attendees data to Excel
+ * @param {Array} attendees - Array of attendee objects
+ * @param {Array<string>} selectedFields - Array of field names to include in export
+ */
 export const exportToExcel = (
-  attendees: Attendee[],
-  selectedFields: string[]
-): void => {
+  attendees,
+  selectedFields
+) => {
   // Filter attendees to only include selected fields
   const filteredData = attendees.map((attendee) => {
-    const filteredAttendee: any = {};
+    const filteredAttendee = {};
     selectedFields.forEach((field) => {
       if (field === "registrationDate") {
         // Format the date for better readability
         filteredAttendee[field] = new Date(
-          attendee[field as keyof Attendee] as unknown as string
+          attendee[field]
         ).toLocaleDateString();
       } else {
-        filteredAttendee[field] = attendee[field as keyof Attendee];
+        filteredAttendee[field] = attendee[field];
       }
     });
     return filteredAttendee;

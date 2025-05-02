@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 
-const CustomCursor: React.FC = () => {
+/**
+ * Custom cursor component that replaces the default cursor with a custom SVG
+ * @returns {JSX.Element|null} Returns null as it only applies CSS
+ */
+const CustomCursor = () => {
   // Hide default cursor
   useEffect(() => {
     // Add cursor style directly to document root

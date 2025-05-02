@@ -18,7 +18,6 @@ import {
 } from "@mui/material";
 import { toPng } from "html-to-image";
 import jsPDF from "jspdf";
-import { Attendee } from "../../types";
 import { getAttendees } from "../../utils/dataUtils";
 import { formatDate, generateTicketNumber } from "../../utils/pdfUtils";
 import { colors } from "../../styles/theme";
@@ -177,18 +176,21 @@ const ActionButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-// Confirmation page component
-const ConfirmationPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+/**
+ * Confirmation page component after successful registration
+ * @returns {JSX.Element} ConfirmationPage component
+ */
+const ConfirmationPage = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isMedium = useMediaQuery(theme.breakpoints.down("md"));
-  const [attendee, setAttendee] = useState<Attendee | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [pdfGenerating, setPdfGenerating] = useState<boolean>(false);
-  const ticketRef = useRef<HTMLDivElement>(null);
+  const [attendee, setAttendee] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [pdfGenerating, setPdfGenerating] = useState(false);
+  const ticketRef = useRef(null);
 
   useEffect(() => {
     if (!id) {
@@ -217,7 +219,9 @@ const ConfirmationPage: React.FC = () => {
       )}&dark=004b8d&size=500&format=svg`
     : "";
 
-  // Handle downloading the ticket as PDF
+  /**
+   * Handle downloading the ticket as PDF
+   */
   const handleDownloadPDF = async () => {
     if (!ticketRef.current) return;
 
