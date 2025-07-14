@@ -494,13 +494,14 @@ const AppContent = () => {
                   />
                   <Box 
                     component="img"
-                    src="/Images/CSE.svg"
+                    src="/Images/CSE_White.svg"
                     alt="CSE Logo" 
                     sx={{
                       height: "60px",
                       marginLeft: "16px",
                       paddingTop: "8px",
                       width: "auto",
+                      filter: "invert(0.5) sepia(1) saturate(0) hue-rotate(180deg)",
                       mr: 1.5,
                     }}
                   />

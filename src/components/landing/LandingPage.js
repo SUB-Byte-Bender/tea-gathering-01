@@ -237,7 +237,7 @@ const LandingPage = ({ formRef }) => {
               },
             }}
           >
-            Tea Gathering
+            Robotics Workshop
           </AnimatedTitle>
           <AnimatedSubtitle
             variant="h5"
@@ -254,7 +254,9 @@ const LandingPage = ({ formRef }) => {
               borderRadius: 2,
             }}
           >
-            Join us for a delightful evening of networking and refreshments
+            Join us for an exciting day of robotics and technology! Learn from
+            industry experts, participate in hands-on workshops, and explore the
+            future of robotics.
           </AnimatedSubtitle>
 
           <Box
@@ -278,7 +280,7 @@ const LandingPage = ({ formRef }) => {
                 alignItems: "center",
               }}
             >
-              <EventIcon sx={{ mr: 1 }} /> 19th July, 2025 | 5:00 PM
+              <EventIcon sx={{ mr: 1 }} /> 23rd July, 2025 | 9:00 AM - 1:00 PM
               <Box component="span" sx={{ mx: 2, opacity: 0.7 }}>
                 •
               </Box>
@@ -290,8 +292,18 @@ const LandingPage = ({ formRef }) => {
 
       <Container maxWidth="lg">
         <Box sx={{ my: 5 }}>
-          <Grid container spacing={isMobile ? 3 : 4} sx={{ position: "relative" }}>
-            <Grid component="div" item xs={12} md={5} sx={{ position: "static" }}>
+          <Grid
+            container
+            spacing={isMobile ? 3 : 4}
+            sx={{ position: "relative" }}
+          >
+            <Grid
+              component="div"
+              item
+              xs={12}
+              md={5}
+              sx={{ position: "static" }}
+            >
               <EventDetails elevation={3}>
                 <Typography
                   variant="h3"
@@ -308,7 +320,7 @@ const LandingPage = ({ formRef }) => {
                     width: "100%",
                   }}
                 >
-                  Event Details
+                  Next Event
                 </Typography>
 
                 <Box
@@ -342,7 +354,7 @@ const LandingPage = ({ formRef }) => {
                       fontSize: "0.95rem",
                     }}
                   >
-                    19th July, 2025 | 5:00 PM
+                    23rd July, 2025 | 9:00 AM - 1:00 PM
                   </Typography>
                 </Box>
 
@@ -380,35 +392,7 @@ const LandingPage = ({ formRef }) => {
                     Auditorium, Stamford University Bangladesh
                   </Typography>
                 </Box>
-
-                <Box
-                  mt={4}
-                  p={3}
-                  bgcolor={`#e0f2fe`}
-                  borderRadius={3}
-                  width="100%"
-                  sx={{
-                    border: `1px solid ${colors.lightActive}`,
-                    position: "relative",
-                  }}
-                >
-                  <InfoIcon
-                    sx={{
-                      position: "absolute",
-                      top: -12,
-                      left: 12,
-                      backgroundColor: "white",
-                      padding: 0.5,
-                      borderRadius: "50%",
-                      color: colors.normal,
-                      border: `1px solid ${colors.lightActive}`,
-                    }}
-                  />
-
-                  <Typography variant="body1" sx={{ mt: 1 }} align="center">
-                    We're excited to welcome you to our Tea Gathering event!
-                    Please register using the form to secure your spot.
-                  </Typography>
+                <Box>
                   <Divider sx={{ my: 2, borderColor: colors.lightActive }} />
                   <Typography
                     variant="body2"
@@ -447,6 +431,39 @@ const LandingPage = ({ formRef }) => {
                       },
                     }}
                   >
+                    <Box
+                      mt={4}
+                      p={3}
+                      bgcolor={`#e0f2fe`}
+                      borderRadius={3}
+                      width="100%"
+                      sx={{
+                        border: `1px solid ${colors.lightActive}`,
+                        position: "relative",
+                      }}
+                    >
+                      <InfoIcon
+                        sx={{
+                          position: "absolute",
+                          top: -12,
+                          left: 12,
+                          backgroundColor: "white",
+                          padding: 0.5,
+                          borderRadius: "50%",
+                          color: colors.normal,
+                          border: `1px solid ${colors.lightActive}`,
+                        }}
+                      />
+
+                      <Typography variant="body1" sx={{ mt: 1 }}>
+                        📌Registration fee: 110 Tk ( Deadline is 10:00PM, 21
+                        July 2025) <br />
+                        📌Payment Procedure: Pay via Bkash, Nagad, or Rocket to{" "}
+                        <strong>01775167615</strong>.<br /> Use "Send Money"
+                        option and enter your Full Name &amp;
+                        <strong> 23 July</strong> in the reference.
+                      </Typography>
+                    </Box>
                     <RegistrationForm />
                   </Box>
                 </FormSection>
